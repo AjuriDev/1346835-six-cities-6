@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов» [![Build status][travis-image]][travis-url]
 
 * Студент: [Dmitriy Kuzmin](https://up.htmlacademy.ru/react/6/user/1346835).
-* Наставник: `Неизвестно`.
+* Наставник: [`Дмитрий Федин`] (https://htmlacademy.ru/profile/id1599231).
 
 ---
 
