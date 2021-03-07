@@ -21,7 +21,7 @@ export default [
     },
     id: 1,
     images: [`img/apartment-01.jpg`, `img/apartment-02.jpg`],
-    isFavorite: false,
+    isFavorite: true,
     isPremium: true,
     location: {
       latitude: 52.35514938496378,
@@ -125,7 +125,7 @@ export default [
         longitude: 4.895168,
         zoom: 10
       },
-      name: `Amsterdam`
+      name: `Cologne`
     },
     description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
     goods: [`Heating`, `Kitchen`, `Cable TV`, `Washing machine`, `Coffee machine`, `Dishwasher`],
@@ -137,7 +137,7 @@ export default [
     },
     id: 4,
     images: [`img/room.jpg`, `img/apartment-01.jpg`],
-    isFavorite: false,
+    isFavorite: true,
     isPremium: true,
     location: {
       latitude: 72.35514938496378,
