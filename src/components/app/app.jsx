@@ -8,13 +8,16 @@ import OfferScreen from '../offer-screen/offer-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 const App = (props) => {
-  const {cardsCount} = props;
+  const {cardsCount, offers} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MainScreen cardsCount={cardsCount} />
+          <MainScreen
+            cardsCount={cardsCount}
+            offers={offers}
+          />
         </Route>
         <Route exact path="/login">
           <LoginScreen />
@@ -35,6 +38,7 @@ const App = (props) => {
 
 App.propTypes = {
   cardsCount: PropTypes.number.isRequired,
+  offers: PropTypes.array.isRequired,
 };
 
 export default App;
