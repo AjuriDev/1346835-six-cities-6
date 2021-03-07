@@ -22,14 +22,14 @@ export default [
     id: 1,
     images: [`img/apartment-01.jpg`, `img/apartment-02.jpg`],
     isFavorite: false,
-    isPremium: false,
+    isPremium: true,
     location: {
       latitude: 52.35514938496378,
       longitude: 4.673877537499948,
       zoom: 8
     },
     maxAdults: 4,
-    previewImage: `img/1.png`,
+    previewImage: `img/apartment-01.jpg`,
     price: 120,
     rating: 4.8,
     reviews: [
@@ -69,7 +69,7 @@ export default [
     },
     id: 2,
     images: [`img/apartment-02.jpg`, `img/apartment-03.jpg`],
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     location: {
       latitude: 52.35514938496378,
@@ -103,7 +103,7 @@ export default [
     },
     id: 3,
     images: [`img/apartment-03.jpg`, `img/room.jpg`],
-    isFavorite: true,
+    isFavorite: false,
     isPremium: false,
     location: {
       latitude: 52.35514938496378,
@@ -137,7 +137,7 @@ export default [
     },
     id: 4,
     images: [`img/room.jpg`, `img/apartment-01.jpg`],
-    isFavorite: true,
+    isFavorite: false,
     isPremium: true,
     location: {
       latitude: 72.35514938496378,

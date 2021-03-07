@@ -1,12 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Card from '../card/card';
+import Offer from '../offer/offer';
 
 const MainScreen = (props) => {
-  const {cardsCount} = props;
-
-  const cards = new Array(cardsCount).fill(``);
+  const {offers} = props;
 
   return (
     <>
@@ -93,7 +91,7 @@ const MainScreen = (props) => {
                   </ul>
                 </form>
                 <div className="cities__places-list places__list tabs__content">
-                  {cards.map((item, i) => <Card key={i} />)}
+                  {offers.map((offer) => <Offer key={offer.id} offer={offer} />)}
                 </div>
               </section>
               <div className="cities__right-section">
@@ -109,6 +107,7 @@ const MainScreen = (props) => {
 
 MainScreen.propTypes = {
   cardsCount: PropTypes.number.isRequired,
+  offers: PropTypes.array.isRequired,
 };
 
 export default MainScreen;
