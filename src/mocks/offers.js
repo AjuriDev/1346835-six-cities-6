@@ -80,6 +80,32 @@ export default [
     previewImage: `img/apartment-02.jpg`,
     price: 80,
     rating: 4.0,
+    reviews: [
+      {
+        comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+        date: `2019-05-08T14:13:56.569Z`,
+        id: 1,
+        rating: 4,
+        user: {
+          avatarUrl: `img/avatar-max.jpg`,
+          id: 5,
+          isPro: false,
+          name: `Max`
+        }
+      },
+      {
+        comment: `Normal`,
+        date: `2021-01-27T14:13:56.569Z`,
+        id: 2,
+        rating: 3.1,
+        user: {
+          avatarUrl: `img/avatar-max.jpg`,
+          id: 5,
+          isPro: false,
+          name: `Max`
+        }
+      }
+    ],
     title: `Wood and stone place`,
     type: `Private room`
   },
@@ -114,6 +140,32 @@ export default [
     previewImage: `img/apartment-03.jpg`,
     price: 132,
     rating: 4.5,
+    reviews: [
+      {
+        comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+        date: `2019-05-08T14:13:56.569Z`,
+        id: 1,
+        rating: 4,
+        user: {
+          avatarUrl: `img/avatar-max.jpg`,
+          id: 5,
+          isPro: false,
+          name: `Max`
+        }
+      },
+      {
+        comment: `Not bad`,
+        date: `2018-01-15T14:13:56.569Z`,
+        id: 2,
+        rating: 3.7,
+        user: {
+          avatarUrl: `img/avatar-max.jpg`,
+          id: 5,
+          isPro: false,
+          name: `Max`
+        }
+      }
+    ],
     title: `Canal View Prinsengracht`,
     type: `Apartment`
   },
@@ -148,6 +200,44 @@ export default [
     previewImage: `img/room.jpg`,
     price: 180,
     rating: 5.0,
+    reviews: [
+      {
+        comment: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+        date: `2019-05-08T14:13:56.569Z`,
+        id: 1,
+        rating: 4,
+        user: {
+          avatarUrl: `img/avatar-max.jpg`,
+          id: 5,
+          isPro: false,
+          name: `Max`
+        }
+      },
+      {
+        comment: `Nice`,
+        date: `2020-06-13T14:13:56.569Z`,
+        id: 2,
+        rating: 4.3,
+        user: {
+          avatarUrl: `img/avatar-max.jpg`,
+          id: 5,
+          isPro: false,
+          name: `Max`
+        }
+      },
+      {
+        comment: `Awesome`,
+        date: `2021-03-05T14:13:56.569Z`,
+        id: 3,
+        rating: 5,
+        user: {
+          avatarUrl: `img/avatar-max.jpg`,
+          id: 5,
+          isPro: false,
+          name: `Max`
+        }
+      }
+    ],
     title: `Nice, cozy, warm big bed apartment`,
     type: `Apartment`
   },
