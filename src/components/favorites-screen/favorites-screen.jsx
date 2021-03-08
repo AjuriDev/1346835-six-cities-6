@@ -1,9 +1,16 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FavoritesList from './favorites-list';
 
 const FavoritesScreen = ({offers}) => {
+  const history = useHistory();
+
+  const onNavLinkClick = (evt) => {
+    evt.preventDefault();
+    history.push(`/favorites`);
+  };
+
   return (
     <>
       <div className="page">
@@ -18,10 +25,16 @@ const FavoritesScreen = ({offers}) => {
               <nav className="header__nav">
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
-                    <a className="header__nav-link header__nav-link--profile" href="#">
+                    <a
+                      className="header__nav-link header__nav-link--profile"
+                      href="#"
+                      onClick={onNavLinkClick}
+                    >
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
-                      <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                      <span className="header__user-name user__name">
+                        Oliver.conner@gmail.com
+                      </span>
                     </a>
                   </li>
                 </ul>

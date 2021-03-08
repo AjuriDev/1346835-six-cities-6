@@ -27,8 +27,10 @@ const App = (props) => {
             offers={offers}
           />
         </Route>
-        <Route exact path="/offer/:id">
-          <OfferScreen />
+        <Route exact path="/offer/:id" render={(offerProps) => <OfferScreen offers={offers} {...offerProps}/>}>
+          {/* <OfferScreen
+            offers={offers}
+          /> */}
         </Route>
         <Route>
           <NotFoundScreen />

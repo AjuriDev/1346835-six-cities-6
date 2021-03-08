@@ -1,9 +1,11 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {calcRatingProgress} from '../../utils/offers.js';
 
 const Offer = ({offer}) => {
   const {
+    id,
     isPremium,
     isFavorite,
     previewImage,
@@ -12,6 +14,13 @@ const Offer = ({offer}) => {
     title,
     type,
   } = offer;
+
+  const history = useHistory();
+
+  const onNavLinkClick = (evt) => {
+    evt.preventDefault();
+    history.push(`/offer/${id}`);
+  };
 
   return (
     <>
@@ -24,7 +33,10 @@ const Offer = ({offer}) => {
           : ``
         }
         <div className="cities__image-wrapper place-card__image-wrapper">
-          <a href="#">
+          <a
+            href="#"
+            onClick={onNavLinkClick}
+          >
             <img className="place-card__image" src={ previewImage } width="260" height="200" alt="Place image"/>
           </a>
         </div>
@@ -48,7 +60,12 @@ const Offer = ({offer}) => {
             </div>
           </div>
           <h2 className="place-card__name">
-            <a href="#">{ title }</a>
+            <a
+              href="#"
+              onClick={onNavLinkClick}
+            >
+              { title }
+            </a>
           </h2>
           <p className="place-card__type">{ type }</p>
         </div>

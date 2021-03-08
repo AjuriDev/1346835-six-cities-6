@@ -12,7 +12,7 @@ export default [
       name: `Amsterdam`
     },
     description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
-    goods: [`Heating`, `Kitchen`, `Cable TV`, `Washing machine`, `Coffee machine`, `Dishwasher`],
+    goods: [`Wi-Fi`, `Heating`, `Kitchen`, `Cable TV`, `Washing machine`, `Baby seat`, `Coffee machine`, `Dishwasher`, `Towels`, `Fridge`],
     host: {
       avatarUrl: `img/avatar-angelina.jpg`,
       id: 1,
@@ -47,7 +47,7 @@ export default [
       }
     ],
     title: `Beautiful & luxurious studio at great location`,
-    type: `apartment`
+    type: `Apartment`
   },
   {
     bedrooms: 1,
@@ -115,7 +115,7 @@ export default [
     price: 132,
     rating: 4.5,
     title: `Canal View Prinsengracht`,
-    type: `apartment`
+    type: `Apartment`
   },
   {
     bedrooms: 4,
@@ -149,6 +149,6 @@ export default [
     price: 180,
     rating: 5.0,
     title: `Nice, cozy, warm big bed apartment`,
-    type: `apartment`
+    type: `Apartment`
   },
 ];
