@@ -1,17 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {calcRatingProgress} from '../../utils/offers.js';
 import dayjs from 'dayjs';
+import {review as reviewType} from '../../types';
 
 const Review = ({review}) => {
-  let {
+  const {
     comment,
     date,
     rating,
     user,
   } = review;
 
-  date = dayjs(date);
+  const humanizedDate = dayjs(date);
 
   return (
     <li className="reviews__item">
@@ -33,14 +33,14 @@ const Review = ({review}) => {
         <p className="reviews__text">
           { comment }
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{ date.format(`MMMM YYYY`) }</time>
+        <time className="reviews__time" dateTime={humanizedDate.format(`YYYY-MM-DD`)}>{ humanizedDate.format(`MMMM YYYY`) }</time>
       </div>
     </li>
   );
 };
 
 Review.propTypes = {
-  review: PropTypes.object.isRequired
+  review: reviewType,
 };
 
 export default Review;

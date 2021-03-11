@@ -1,16 +1,9 @@
 import React from 'react';
-import {Link, useHistory} from 'react-router-dom';
-import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import FavoritesList from './favorites-list';
+import {offers as offersType} from '../../types';
 
 const FavoritesScreen = ({offers}) => {
-  const history = useHistory();
-
-  const onNavLinkClick = (evt) => {
-    evt.preventDefault();
-    history.push(`/favorites`);
-  };
-
   return (
     <div className="page">
       <header className="header">
@@ -24,17 +17,13 @@ const FavoritesScreen = ({offers}) => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                    onClick={onNavLinkClick}
-                  >
+                  <Link className="header__nav-link header__nav-link--profile" to="/favorites">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">
                       Oliver.conner@gmail.com
                     </span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -60,7 +49,7 @@ const FavoritesScreen = ({offers}) => {
 };
 
 FavoritesScreen.propTypes = {
-  offers: PropTypes.array.isRequired
+  offers: offersType,
 };
 
 export default FavoritesScreen;

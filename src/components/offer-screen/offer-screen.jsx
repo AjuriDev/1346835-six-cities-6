@@ -1,12 +1,19 @@
 import React from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {calcRatingProgress} from '../../utils/offers.js';
 import ReviewsBlock from '../reviews/reviews-block';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import {offers as offersType} from '../../types';
 
 const OfferScreen = ({offers, match: {params: {id}}}) => {
-  id = parseInt(id, 10);
-  const offer = offers.find((item) => item.id === id);
+  const idInt = parseInt(id, 10);
+  const offer = offers.find((item) => item.id === idInt);
+
+  if (!offer) {
+    return <NotFoundScreen />;
+  }
+
   const {
     bedrooms,
     description,
@@ -23,13 +30,6 @@ const OfferScreen = ({offers, match: {params: {id}}}) => {
     type,
   } = offer;
 
-  const history = useHistory();
-
-  const onNavLinkClick = (evt) => {
-    evt.preventDefault();
-    history.push(`/favorites`);
-  };
-
   return (
     <div className="page">
       <header className="header">
@@ -43,17 +43,13 @@ const OfferScreen = ({offers, match: {params: {id}}}) => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                    onClick={onNavLinkClick}
-                  >
+                  <Link className="header__nav-link header__nav-link--profile" to="/favorites">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">
                       Oliver.conner@gmail.com
                     </span>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </nav>
@@ -262,8 +258,8 @@ const OfferScreen = ({offers, match: {params: {id}}}) => {
 };
 
 OfferScreen.propTypes = {
-  offers: PropTypes.array.isRequired,
-  match: PropTypes.object.isRequired
+  offers: offersType,
+  match: PropTypes.object.isRequired,
 };
 
 export default OfferScreen;

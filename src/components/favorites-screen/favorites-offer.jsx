@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {calcRatingProgress} from '../../utils/offers.js';
+import {offer as offerType} from '../../types';
 
 const FavoritesOffer = ({offer}) => {
   const {
@@ -48,8 +48,7 @@ const FavoritesOffer = ({offer}) => {
 };
 
 FavoritesOffer.propTypes = {
-  offer: PropTypes.object.isRequired,
-  isFavoritePage: PropTypes.bool
+  offer: offerType,
 };
 
 export default FavoritesOffer;

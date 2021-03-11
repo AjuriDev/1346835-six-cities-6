@@ -1,7 +1,7 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom';
-import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import {calcRatingProgress} from '../../utils/offers.js';
+import {offer as offerType} from '../../types';
 
 const Offer = ({offer}) => {
   const {
@@ -15,13 +15,6 @@ const Offer = ({offer}) => {
     type,
   } = offer;
 
-  const history = useHistory();
-
-  const onNavLinkClick = (evt) => {
-    evt.preventDefault();
-    history.push(`/offer/${id}`);
-  };
-
   return (
     <article className="cities__place-card place-card">
       { isPremium
@@ -32,12 +25,9 @@ const Offer = ({offer}) => {
         : ``
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a
-          href="#"
-          onClick={onNavLinkClick}
-        >
+        <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={ previewImage } width="260" height="200" alt="Place image"/>
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -59,12 +49,9 @@ const Offer = ({offer}) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a
-            href="#"
-            onClick={onNavLinkClick}
-          >
+          <Link to={`/offer/${id}`}>
             { title }
-          </a>
+          </Link>
         </h2>
         <p className="place-card__type">{ type }</p>
       </div>
@@ -73,7 +60,7 @@ const Offer = ({offer}) => {
 };
 
 Offer.propTypes = {
-  offer: PropTypes.object.isRequired
+  offer: offerType,
 };
 
 export default Offer;

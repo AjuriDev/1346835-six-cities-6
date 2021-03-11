@@ -1,11 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import FavoritesItem from './favorites-item';
 import {makeItemsUniq} from '../../utils/common';
+import {offers as offersType} from '../../types';
 
 const FavoritesList = ({offers}) => {
-  offers = offers.filter((offer) => offer.isFavorite === true);
-  const cities = makeItemsUniq(offers.map((offer) => offer.city.name));
+  const cities = makeItemsUniq(offers
+    .filter((offer) => offer.isFavorite === true)
+    .map((offer) => offer.city.name));
 
   return (
     <ul className="favorites__list">
@@ -15,7 +16,7 @@ const FavoritesList = ({offers}) => {
 };
 
 FavoritesList.propTypes = {
-  offers: PropTypes.array.isRequired
+  offers: offersType,
 };
 
 export default FavoritesList;

@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FavoritesOffer from './favorites-offer';
+import {offers as offersType} from '../../types';
 
 const FavoritesItem = ({offers, city}) => {
-  offers = offers.filter((offer) => offer.city.name === city);
+  const filteredOffers = offers.filter((offer) => offer.city.name === city);
 
   return (
     <li className="favorites__locations-items">
@@ -15,14 +16,14 @@ const FavoritesItem = ({offers, city}) => {
         </div>
       </div>
       <div className="favorites__places">
-        {offers.map((offer) => <FavoritesOffer key={offer.id} offer={offer}/>)}
+        {filteredOffers.map((offer) => <FavoritesOffer key={offer.id} offer={offer}/>)}
       </div>
     </li>
   );
 };
 
 FavoritesItem.propTypes = {
-  offers: PropTypes.array.isRequired,
+  offers: offersType,
   city: PropTypes.string.isRequired
 };
 

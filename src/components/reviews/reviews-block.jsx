@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Review from './review';
 import ReviewsForm from './reviews-form';
+import {reviews as reviewsType} from '../../types';
 
 const ReviewsBlock = ({reviews}) => {
   return (
@@ -18,7 +18,7 @@ const ReviewsBlock = ({reviews}) => {
 };
 
 ReviewsBlock.propTypes = {
-  reviews: PropTypes.array.isRequired
+  reviews: reviewsType,
 };
 
 export default ReviewsBlock;

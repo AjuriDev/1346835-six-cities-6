@@ -1,21 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import MainScreen from '../main-screen/main-screen';
 import LoginScreen from '../login-screen/login-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
 import OfferScreen from '../offer-screen/offer-screen';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import {offers as offersType} from '../../types';
 
 const App = (props) => {
-  const {cardsCount, offers} = props;
+  const {offers} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
           <MainScreen
-            cardsCount={cardsCount}
             offers={offers}
           />
         </Route>
@@ -27,11 +26,7 @@ const App = (props) => {
             offers={offers}
           />
         </Route>
-        <Route exact path="/offer/:id" render={(offerProps) => <OfferScreen offers={offers} {...offerProps}/>}>
-          {/* <OfferScreen
-            offers={offers}
-          /> */}
-        </Route>
+        <Route exact path="/offer/:id" render={(offerProps) => <OfferScreen offers={offers} {...offerProps}/>} />
         <Route>
           <NotFoundScreen />
         </Route>
@@ -41,8 +36,7 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  cardsCount: PropTypes.number.isRequired,
-  offers: PropTypes.array.isRequired,
+  offers: offersType,
 };
 
 export default App;
