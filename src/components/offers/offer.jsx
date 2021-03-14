@@ -1,9 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {calcRatingProgress} from '../../utils/offers.js';
+import PropTypes from 'prop-types';
 import {offer as offerType} from '../../types';
 
-const Offer = ({offer}) => {
+const Offer = ({offer, block}) => {
   const {
     id,
     isPremium,
@@ -15,14 +16,16 @@ const Offer = ({offer}) => {
     type,
   } = offer;
 
+  const isRenderPremium = isPremium && block === `cities`;
+
   return (
-    <article className="cities__place-card place-card">
-      { isPremium && (
+    <article className={`${block}__place-card place-card`}>
+      { isRenderPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>)
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${block}__image-wrapper place-card__image-wrapper`}>
         <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={ previewImage } width="260" height="200" alt="Place image"/>
         </Link>
@@ -59,6 +62,7 @@ const Offer = ({offer}) => {
 
 Offer.propTypes = {
   offer: offerType,
+  block: PropTypes.string.isRequired
 };
 
 export default Offer;
