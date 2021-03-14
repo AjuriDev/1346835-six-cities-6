@@ -5,9 +5,9 @@ export default [
     bedrooms: 3,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10
+        latitude: 52.38333,
+        longitude: 4.9,
+        zoom: 12
       },
       name: `Amsterdam`
     },
@@ -53,9 +53,9 @@ export default [
     bedrooms: 1,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10
+        latitude: 52.38333,
+        longitude: 4.9,
+        zoom: 12
       },
       name: `Amsterdam`
     },
@@ -113,9 +113,9 @@ export default [
     bedrooms: 2,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10
+        latitude: 52.38333,
+        longitude: 4.9,
+        zoom: 12
       },
       name: `Amsterdam`
     },
@@ -173,9 +173,9 @@ export default [
     bedrooms: 4,
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10
+        latitude: 52.38333,
+        longitude: 4.9,
+        zoom: 12
       },
       name: `Amsterdam`
     },

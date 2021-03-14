@@ -1,10 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import OffersList from '../offers/offers-list';
 import {offers as offersType} from '../../types';
+import Map from '../map/map';
+import {city} from '../../const';
 
 const MainScreen = (props) => {
   const {offers} = props;
+
+  const [cityName, setCity] = useState(`Amsterdam`);
+
+  const filteredOffers = offers.filter((offer) => offer.city.name === cityName);
+
+  const points = filteredOffers.map((offer) => {
+    return {
+      lat: offer.location.latitude,
+      lng: offer.location.longitude,
+      title: offer.title
+    };
+  });
 
   return (
     <div className="page page--gray page--main">
@@ -91,10 +105,12 @@ const MainScreen = (props) => {
                   <li className="places__option" tabIndex="0">Top rated first</li>
                 </ul>
               </form>
-              <OffersList offers={offers} />
+              <OffersList offers={filteredOffers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={city} points={points} />
+              </section>
             </div>
           </div>
         </div>
