@@ -9,7 +9,7 @@ export default [
         longitude: 4.9,
         zoom: 12
       },
-      name: `Amsterdam`
+      name: `Cologne`
     },
     description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
     goods: [`Wi-Fi`, `Heating`, `Kitchen`, `Cable TV`, `Washing machine`, `Baby seat`, `Coffee machine`, `Dishwasher`, `Towels`, `Fridge`],

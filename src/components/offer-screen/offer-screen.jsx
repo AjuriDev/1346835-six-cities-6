@@ -5,10 +5,20 @@ import {calcRatingProgress} from '../../utils/offers.js';
 import ReviewsBlock from '../reviews/reviews-block';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import {offers as offersType} from '../../types';
+import Map from '../map/map';
+import {city} from '../../const';
 
 const OfferScreen = ({offers, match: {params: {id}}}) => {
   const idInt = parseInt(id, 10);
   const offer = offers.find((item) => item.id === idInt);
+  const nearOffers = offers.slice(0, 3); // Временное решение пока данные не придут с сервера
+  const points = nearOffers.map((nearOffer) => {
+    return {
+      lat: nearOffer.location.latitude,
+      lng: nearOffer.location.longitude,
+      title: nearOffer.title
+    };
+  });
 
   if (!offer) {
     return <NotFoundScreen />;
@@ -150,7 +160,9 @@ const OfferScreen = ({offers, match: {params: {id}}}) => {
               <ReviewsBlock reviews={reviews} />
             </div>
           </div>
-          <section className="property__map map" />
+          <section className="property__map map">
+            <Map city={city} points={points} />
+          </section>
         </section>
         <div className="container">
           <section className="near-places places">
