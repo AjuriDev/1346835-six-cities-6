@@ -1,7 +1,7 @@
 import {ActionType} from './action';
 import {DEFAULT_CITY} from '../const';
 import offers from '../mocks/offers';
-import {filterOffersByCity} from '../mocks/offers';
+import {filterOffersByCity} from '../utils/offers';
 
 const initialState = {
   offers,
@@ -23,9 +23,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         currentOffers: action.payload
       };
-  }
 
-  return state;
+    default:
+      return state;
+  }
 };
 
 
