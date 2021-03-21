@@ -4,8 +4,8 @@ const city = {
   zoom: 12
 };
 
-const defaultCity = `Amsterdam`;
+const DEFAULT_CITY = `Amsterdam`;
 
 const cityNames = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
 
-export {city, defaultCity, cityNames};
+export {city, DEFAULT_CITY, cityNames};

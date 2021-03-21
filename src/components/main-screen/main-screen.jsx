@@ -4,12 +4,12 @@ import OffersList from '../offers/offers-list';
 import {offers as offersType} from '../../types';
 import Map from '../map/map';
 import LocationsList from '../locations/locations-list';
-import {city, defaultCity} from '../../const';
+import {city, DEFAULT_CITY} from '../../const';
 
 const MainScreen = (props) => {
   const {offers} = props;
 
-  const [cityName, setCityName] = useState(defaultCity);
+  const [cityName, setCityName] = useState(DEFAULT_CITY);
 
   const filteredOffers = offers.filter((offer) => offer.city.name === cityName);
 
@@ -52,7 +52,7 @@ const MainScreen = (props) => {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <LocationsList cityName={cityName} setCityName={setCityName} />
+            <LocationsList selectedCity={cityName} changeCity={setCityName} />
           </section>
         </div>
         <div className="cities">

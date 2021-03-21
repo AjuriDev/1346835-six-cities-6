@@ -2,24 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {cityNames} from '../../const';
 
-const LocationsList = ({cityName, setCityName}) => {
-  const onLocationsListSelect = (evt) => {
+const LocationsList = ({selectedCity, changeCity}) => {
+  const handleCityTabClick = (city) => (evt) => {
     evt.preventDefault();
-
-    const target = evt.target.closest(`.locations__item`);
-
-    if (target !== null) {
-      setCityName(target.textContent);
-    }
+    changeCity(city);
   };
 
   return (
-    <ul className="locations__list tabs__list" onClick={onLocationsListSelect}>
+    <ul className="locations__list tabs__list">
       {cityNames.map((city, i) => (
         <li key={`${city}-${i}`} className="locations__item">
           <a
-            className={`locations__item-link tabs__item${city === cityName ? ` tabs__item--active` : ``}`}
+            className={`locations__item-link tabs__item${city === selectedCity ? ` tabs__item--active` : ``}`}
             href="#"
+            onClick={handleCityTabClick(city)}
           >
             <span>{ city }</span>
           </a>
@@ -30,8 +26,8 @@ const LocationsList = ({cityName, setCityName}) => {
 };
 
 LocationsList.propTypes = {
-  cityName: PropTypes.string.isRequired,
-  setCityName: PropTypes.func.isRequired,
+  selectedCity: PropTypes.string.isRequired,
+  changeCity: PropTypes.func.isRequired,
 };
 
 export default LocationsList;
