@@ -3,11 +3,14 @@ import {DEFAULT_CITY, SortType} from '../const';
 import offers from '../mocks/offers';
 import {filterOffersByCity, sortOffersByOption} from '../utils/offers';
 
+const INITIAL_OFFER_ID = 0;
+
 const initialState = {
   offers,
   currentCity: DEFAULT_CITY,
   currentOffers: filterOffersByCity(offers, DEFAULT_CITY),
   currentSortType: SortType.POPULAR,
+  activeOfferID: INITIAL_OFFER_ID,
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,6 +28,18 @@ const reducer = (state = initialState, action) => {
         ...state,
         currentSortType: action.payload,
         currentOffers: sortOffersByOption(state.currentOffers, action.payload)
+      };
+
+    case ActionType.CHANGE_ACTIVE_OFFER_ID:
+      return {
+        ...state,
+        activeOfferID: action.payload
+      };
+
+    case ActionType.RESET_ACTIVE_OFFER_ID:
+      return {
+        ...state,
+        activeOfferID: INITIAL_OFFER_ID
       };
 
     case ActionType.UPDATE_OFFERS:

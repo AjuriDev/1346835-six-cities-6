@@ -3,19 +3,13 @@ import {connect} from 'react-redux';
 import leaflet from 'leaflet';
 import {offers as offersType} from '../../types';
 import {city} from '../../const';
+import PropTypes from "prop-types";
 
 import 'leaflet/dist/leaflet.css';
 
-const Map = ({currentOffers}) => {
+const Map = ({currentOffers, activeOfferID}) => {
   const mapRef = useRef();
-
-  const points = currentOffers.map((offer) => {
-    return {
-      lat: offer.location.latitude,
-      lng: offer.location.longitude,
-      title: offer.title
-    };
-  });
+  const pointsRef = useRef();
 
   useEffect(() => {
     mapRef.current = leaflet.map(`map`, {
@@ -34,28 +28,36 @@ const Map = ({currentOffers}) => {
     })
     .addTo(mapRef.current);
 
-    points.forEach((point) => {
-      const customIcon = leaflet.icon({
-        iconUrl: `img/pin.svg`,
-        iconSize: [30, 30]
-      });
-
-      leaflet.marker({
-        lat: point.lat,
-        lng: point.lng
-      },
-      {
-        icon: customIcon
-      })
-      .addTo(mapRef.current)
-      .bindPopup(point.title);
-    });
-
     return () => {
       mapRef.current.off();
       mapRef.current.remove();
     };
-  }, [city, points]);
+  }, [city]);
+
+  useEffect(() => {
+    const points = currentOffers.map((offer) => {
+      const icon = leaflet.icon({
+        iconUrl: `${activeOfferID === offer.id ? `img/pin-active.svg` : `img/pin.svg`}`,
+        iconSize: [30, 30]
+      });
+
+      return leaflet.marker({
+        lat: offer.location.latitude,
+        lng: offer.location.longitude,
+        title: offer.title
+      }, {
+        icon
+      })
+      .bindPopup(offer.title);
+    });
+
+    pointsRef.current = leaflet.layerGroup(points);
+    pointsRef.current.addTo(mapRef.current);
+
+    return () => {
+      mapRef.current.removeLayer(pointsRef.current);
+    };
+  });
 
   return (
     <div id="map" style={{height: `100%`}} ref={mapRef}></div>
@@ -64,10 +66,12 @@ const Map = ({currentOffers}) => {
 
 Map.propTypes = {
   currentOffers: offersType,
+  activeOfferID: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  currentOffers: state.currentOffers
+  currentOffers: state.currentOffers,
+  activeOfferID: state.activeOfferID
 });
 
 export {Map};
