@@ -1,10 +1,21 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 import CitiesPlaces from '../cities/cities-places';
+import NoPlaces from '../cities/no-places';
 import Map from '../map/map';
 import LocationsList from '../locations/locations-list';
+import {offers as offersType} from '../../types';
 
-const MainScreen = () => {
+const MainScreen = ({currentOffers}) => {
+  const isNoPlaces = currentOffers.length === 0;
+  const mainPageClass = isNoPlaces
+    ? `page__main page__main--index page__main--index-empty`
+    : `page__main page__main--index`;
+  const containerClass = isNoPlaces
+    ? `cities__places-container cities__places-container--empty container`
+    : `cities__places-container container`;
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -32,7 +43,7 @@ const MainScreen = () => {
         </div>
       </header>
 
-      <main className="page__main page__main--index">
+      <main className={mainPageClass}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
@@ -40,12 +51,16 @@ const MainScreen = () => {
           </section>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <CitiesPlaces />
+          <div className={containerClass}>
+            {isNoPlaces ? <NoPlaces /> : <CitiesPlaces />}
             <div className="cities__right-section">
-              <section className="cities__map map">
-                <Map />
-              </section>
+              {
+                !isNoPlaces && (
+                  <section className="cities__map map">
+                    <Map />
+                  </section>
+                )
+              }
             </div>
           </div>
         </div>
@@ -54,4 +69,13 @@ const MainScreen = () => {
   );
 };
 
-export default MainScreen;
+MainScreen.propTypes = {
+  currentOffers: offersType,
+};
+
+const mapStateToProps = (state) => ({
+  currentOffers: state.currentOffers
+});
+
+export {MainScreen};
+export default connect(mapStateToProps, null)(MainScreen);
