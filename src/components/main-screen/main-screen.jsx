@@ -1,26 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
-import OffersList from '../offers/offers-list';
-import {offers as offersType} from '../../types';
+import CitiesPlaces from '../cities/cities-places';
 import Map from '../map/map';
 import LocationsList from '../locations/locations-list';
-import {city, DEFAULT_CITY} from '../../const';
 
-const MainScreen = (props) => {
-  const {offers} = props;
-
-  const [cityName, setCityName] = useState(DEFAULT_CITY);
-
-  const filteredOffers = offers.filter((offer) => offer.city.name === cityName);
-
-  const points = filteredOffers.map((offer) => {
-    return {
-      lat: offer.location.latitude,
-      lng: offer.location.longitude,
-      title: offer.title
-    };
-  });
-
+const MainScreen = () => {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -52,34 +36,15 @@ const MainScreen = (props) => {
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">
-            <LocationsList selectedCity={cityName} changeCity={setCityName} />
+            <LocationsList />
           </section>
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex="0">
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex="0">Popular</li>
-                  <li className="places__option" tabIndex="0">Price: low to high</li>
-                  <li className="places__option" tabIndex="0">Price: high to low</li>
-                  <li className="places__option" tabIndex="0">Top rated first</li>
-                </ul>
-              </form>
-              <OffersList offers={filteredOffers} />
-            </section>
+            <CitiesPlaces />
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={city} points={points} />
+                <Map />
               </section>
             </div>
           </div>
@@ -87,10 +52,6 @@ const MainScreen = (props) => {
       </main>
     </div>
   );
-};
-
-MainScreen.propTypes = {
-  offers: offersType,
 };
 
 export default MainScreen;

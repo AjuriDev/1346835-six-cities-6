@@ -4,7 +4,7 @@ const city = {
   zoom: 12
 };
 
-const DEFAULT_CITY = `Amsterdam`;
+const DEFAULT_CITY = `Paris`;
 
 const cityNames = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
 
