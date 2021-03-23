@@ -4,8 +4,15 @@ const city = {
   zoom: 12
 };
 
-const defaultCity = `Amsterdam`;
+const DEFAULT_CITY = `Paris`;
 
-const cityNames = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
+const CITY_NAMES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
 
-export {city, defaultCity, cityNames};
+const SortType = {
+  POPULAR: `Popular`,
+  PRICE_LOW_TO_HIGH: `Price: low to high`,
+  PRICE_HIGH_TO_LOW: `Price: high to low`,
+  TOP_RATED_FIRST: `Top rated first`
+};
+
+export {city, DEFAULT_CITY, CITY_NAMES, SortType};

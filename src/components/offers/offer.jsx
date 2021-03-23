@@ -1,10 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from "react-redux";
+import {ActionCreator} from "../../store/action";
 import {calcRatingProgress} from '../../utils/offers.js';
 import PropTypes from 'prop-types';
 import {offer as offerType} from '../../types';
 
-const Offer = ({offer, block}) => {
+const Offer = ({offer, block, onMouseEnter, onMouseLeave}) => {
   const {
     id,
     isPremium,
@@ -16,10 +18,22 @@ const Offer = ({offer, block}) => {
     type,
   } = offer;
 
+  const handleMouseEnter = () => {
+    onMouseEnter(id);
+  };
+
+  const handleMouseLeave = () => {
+    onMouseLeave();
+  };
+
   const isRenderPremium = isPremium && block === `cities`;
 
   return (
-    <article className={`${block}__place-card place-card`}>
+    <article
+      className={`${block}__place-card place-card`}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       { isRenderPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
@@ -62,7 +76,19 @@ const Offer = ({offer, block}) => {
 
 Offer.propTypes = {
   offer: offerType,
-  block: PropTypes.string.isRequired
+  block: PropTypes.string.isRequired,
+  onMouseEnter: PropTypes.func.isRequired,
+  onMouseLeave: PropTypes.func.isRequired,
 };
 
-export default Offer;
+const mapDispatchToProps = (dispatch) => ({
+  onMouseEnter(id) {
+    dispatch(ActionCreator.changeActiveOfferID(id));
+  },
+  onMouseLeave() {
+    dispatch(ActionCreator.resetActiveOfferID());
+  },
+});
+
+export {Offer};
+export default connect(null, mapDispatchToProps)(Offer);
