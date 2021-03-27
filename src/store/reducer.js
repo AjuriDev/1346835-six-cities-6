@@ -1,5 +1,5 @@
 import {ActionType} from './action';
-import {DEFAULT_CITY, SortType, AuthorizationStatus} from '../const';
+import {DEFAULT_CITY, SortType, DEFAULT_USER, AuthorizationStatus} from '../const';
 import {filterOffersByCity, sortOffersByOption} from '../utils/offers';
 
 const INITIAL_OFFER_ID = 0;
@@ -11,6 +11,7 @@ const initialState = {
   currentSortType: SortType.POPULAR,
   activeOfferID: INITIAL_OFFER_ID,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  user: DEFAULT_USER,
   isDataLoaded: false,
 };
 
@@ -58,7 +59,13 @@ const reducer = (state = initialState, action) => {
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
+        // user: action.payload,
         authorizationStatus: action.payload,
+      };
+    case ActionType.SET_USER:
+      return {
+        ...state,
+        user: action.payload,
       };
 
     default:

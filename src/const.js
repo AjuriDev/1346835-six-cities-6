@@ -9,9 +9,17 @@ const SortType = {
   TOP_RATED_FIRST: `Top rated first`
 };
 
+const DEFAULT_USER = {
+  avatarUrl: ``,
+  email: ``,
+  id: 0,
+  isPro: false,
+  name: ``,
+};
+
 const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,
 };
 
-export {DEFAULT_CITY, CITY_NAMES, SortType, AuthorizationStatus};
+export {DEFAULT_CITY, CITY_NAMES, SortType, DEFAULT_USER, AuthorizationStatus};

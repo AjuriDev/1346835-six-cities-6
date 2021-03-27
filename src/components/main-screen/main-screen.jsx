@@ -7,11 +7,12 @@ import CitiesPlaces from '../cities/cities-places';
 import NoPlaces from '../cities/no-places';
 import Map from '../map/map';
 import LocationsList from '../locations/locations-list';
-import {offers as offersType} from '../../types';
+import {offers as offersType, user as userType} from '../../types';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchOffers} from '../../store/api-actions';
+import {AuthorizationStatus} from '../../const';
 
-const MainScreen = ({currentOffers, isDataLoaded, onLoadData}) => {
+const MainScreen = ({authorizationStatus, user, currentOffers, isDataLoaded, onLoadData}) => {
 
   useEffect(() => {
     if (!isDataLoaded) {
@@ -46,13 +47,21 @@ const MainScreen = ({currentOffers, isDataLoaded, onLoadData}) => {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to="/favorites">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                  </Link>
+                  {
+                    authorizationStatus === AuthorizationStatus.AUTH ?
+                      <Link className="header__nav-link header__nav-link--profile" to="/favorites">
+                        <div className="header__avatar-wrapper user__avatar-wrapper">
+                        </div>
+                        <span className="header__user-name user__name">
+                          { user.name }
+                        </span>
+                      </Link> :
+                      <Link className="header__nav-link header__nav-link--profile" to="/login">
+                        <div className="header__avatar-wrapper user__avatar-wrapper">
+                        </div>
+                        <span className="header__login">Sign in</span>
+                      </Link>
+                  }
                 </li>
               </ul>
             </nav>
@@ -87,12 +96,16 @@ const MainScreen = ({currentOffers, isDataLoaded, onLoadData}) => {
 };
 
 MainScreen.propTypes = {
+  authorizationStatus: PropTypes.string.isRequired,
+  user: userType,
   currentOffers: offersType,
   isDataLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
+  user: state.user,
   currentOffers: state.currentOffers,
   isDataLoaded: state.isDataLoaded,
 });

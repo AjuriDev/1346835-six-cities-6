@@ -1,5 +1,5 @@
 import {ActionCreator} from "./action";
-import {adaptOfferToClient} from "./adapter";
+import {adaptOfferToClient, adaptUserToClient} from "./adapter";
 import {AuthorizationStatus} from "../const";
 
 export const fetchOffers = () => (dispatch, _getState, api) => (
@@ -10,11 +10,17 @@ export const fetchOffers = () => (dispatch, _getState, api) => (
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .catch(() => {})
+  .then(({data}) => {
+    dispatch(ActionCreator.setUser(adaptUserToClient(data)));
+    dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+  })
+  .catch(() => {})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(`/login`, {email, password})
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(({data}) => {
+      dispatch(ActionCreator.setUser(adaptUserToClient(data)));
+      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+    })
 );

@@ -6,6 +6,7 @@ export const ActionType = {
   UPDATE_OFFERS: `server/updateOffers`,
   LOAD_OFFERS: `server/loadOffers`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  SET_USER: `user/setUser`,
 };
 
 export const ActionCreator = {
@@ -34,6 +35,10 @@ export const ActionCreator = {
   }),
   requireAuthorization: (payload) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
+    payload,
+  }),
+  setUser: (payload) => ({
+    type: ActionType.SET_USER,
     payload,
   }),
 };

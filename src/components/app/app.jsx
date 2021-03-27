@@ -1,5 +1,6 @@
 import React from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import PrivateRoute from '../private-route/private-route';
 import MainScreen from '../main-screen/main-screen';
 import LoginScreen from '../login-screen/login-screen';
 import FavoritesScreen from '../favorites-screen/favorites-screen';
@@ -19,11 +20,16 @@ const App = (props) => {
         <Route exact path="/login">
           <LoginScreen />
         </Route>
-        <Route exact path="/favorites">
+        <PrivateRoute exact
+          path="/favorites"
+          render={() => <FavoritesScreen />}
+        >
+        </PrivateRoute>
+        {/* <Route exact path="/favorites">
           <FavoritesScreen
             offers={offers}
           />
-        </Route>
+        </Route> */}
         <Route exact path="/offer/:id" render={(offerProps) => <OfferScreen offers={offers} {...offerProps}/>} />
         <Route>
           <NotFoundScreen />

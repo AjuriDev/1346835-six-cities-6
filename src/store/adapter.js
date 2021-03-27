@@ -1,19 +1,26 @@
+const adaptUserToClient = (user) => {
+  const adaptedUser = {
+    ...user,
+    avatarUrl: user.avatar_url,
+    isPro: user.is_pro
+  };
+
+  delete adaptedUser.avatar_url;
+  delete adaptedUser.is_pro;
+
+  return adaptedUser;
+};
+
 const adaptOfferToClient = (offer) => {
   const adaptedOffer = {
     ...offer,
-    host: {
-      ...offer.host,
-      avatarUrl: offer.host.avatar_url,
-      isPro: offer.host.is_pro
-    },
+    host: adaptUserToClient(offer.host),
     isFavorite: offer.is_favorite,
     isPremium: offer.is_premium,
     maxAdults: offer.max_adults,
     previewImage: offer.preview_image,
   };
 
-  delete adaptedOffer.host.avatar_url;
-  delete adaptedOffer.host.is_pro;
   delete adaptedOffer.is_favorite;
   delete adaptedOffer.is_premium;
   delete adaptedOffer.max_adults;
@@ -22,4 +29,4 @@ const adaptOfferToClient = (offer) => {
   return adaptedOffer;
 };
 
-export {adaptOfferToClient};
+export {adaptOfferToClient, adaptUserToClient};
