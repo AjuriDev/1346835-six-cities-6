@@ -1,9 +1,11 @@
 import {ActionCreator} from "./action";
+import {adaptOfferToClient} from "./adapter";
 import {AuthorizationStatus} from "../const";
 
-export const fetchOffersList = () => (dispatch, _getState, api) => (
+export const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
-    .then(({data}) => dispatch(ActionCreator.loadOffers(data)))
+    .then(({data}) => dispatch(ActionCreator.loadOffers(data
+      .map((offer) => adaptOfferToClient(offer)))))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (

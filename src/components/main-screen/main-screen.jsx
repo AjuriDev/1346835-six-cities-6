@@ -1,13 +1,30 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {ActionCreator} from '../../store/action';
 import CitiesPlaces from '../cities/cities-places';
 import NoPlaces from '../cities/no-places';
 import Map from '../map/map';
 import LocationsList from '../locations/locations-list';
 import {offers as offersType} from '../../types';
+import LoadingScreen from '../loading-screen/loading-screen';
+import {fetchOffers} from '../../store/api-actions';
 
-const MainScreen = ({currentOffers}) => {
+const MainScreen = ({currentOffers, isDataLoaded, onLoadData}) => {
+
+  useEffect(() => {
+    if (!isDataLoaded) {
+      onLoadData();
+    }
+  }, [isDataLoaded]);
+
+  if (!isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   const isNoPlaces = currentOffers.length === 0;
   const mainPageClass = isNoPlaces
     ? `page__main page__main--index page__main--index-empty`
@@ -71,11 +88,24 @@ const MainScreen = ({currentOffers}) => {
 
 MainScreen.propTypes = {
   currentOffers: offersType,
+  isDataLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  currentOffers: state.currentOffers
+  currentOffers: state.currentOffers,
+  isDataLoaded: state.isDataLoaded,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onUserAnswer(question, answer) {
+    dispatch(ActionCreator.incrementStep());
+    dispatch(ActionCreator.incrementMistake(question, answer));
+  },
+  onLoadData() {
+    dispatch(fetchOffers());
+  },
 });
 
 export {MainScreen};
-export default connect(mapStateToProps, null)(MainScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

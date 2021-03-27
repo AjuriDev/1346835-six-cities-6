@@ -1,6 +1,5 @@
 import {ActionType} from './action';
 import {DEFAULT_CITY, SortType, AuthorizationStatus} from '../const';
-import offers from '../mocks/offers';
 import {filterOffersByCity, sortOffersByOption} from '../utils/offers';
 
 const INITIAL_OFFER_ID = 0;
@@ -8,10 +7,11 @@ const INITIAL_OFFER_ID = 0;
 const initialState = {
   offers: [],
   currentCity: DEFAULT_CITY,
-  currentOffers: filterOffersByCity(offers, DEFAULT_CITY),
+  currentOffers: [],
   currentSortType: SortType.POPULAR,
   activeOfferID: INITIAL_OFFER_ID,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,7 +20,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         currentCity: action.payload,
-        currentOffers: filterOffersByCity(offers, action.payload),
+        currentOffers: filterOffersByCity(state.offers, action.payload),
         currentSortType: SortType.POPULAR,
       };
 
@@ -48,10 +48,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         currentOffers: action.payload
       };
-    case ActionType.LOAD_OFFERSS:
+    case ActionType.LOAD_OFFERS:
       return {
         ...state,
         offers: action.payload,
+        currentOffers: filterOffersByCity(action.payload, state.currentCity),
+        isDataLoaded: true,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {

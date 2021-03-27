@@ -39,7 +39,6 @@ const offer = PropTypes.shape({
   previewImage: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
-  reviews: PropTypes.arrayOf(review).isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 });
