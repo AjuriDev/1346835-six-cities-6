@@ -1,10 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 import FavoritesList from './favorites-list';
-import {offers as offersType} from '../../types';
+import {user as userType} from '../../types';
 import {AppRoute} from '../../const';
 
-const FavoritesScreen = ({offers}) => {
+const FavoritesScreen = ({user}) => {
   return (
     <div className="page">
       <header className="header">
@@ -22,7 +23,7 @@ const FavoritesScreen = ({offers}) => {
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
+                      { user.email }
                     </span>
                   </Link>
                 </li>
@@ -34,10 +35,7 @@ const FavoritesScreen = ({offers}) => {
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <FavoritesList offers={offers} />
-          </section>
+          <FavoritesList />
         </div>
       </main>
       <footer className="footer container">
@@ -50,7 +48,12 @@ const FavoritesScreen = ({offers}) => {
 };
 
 FavoritesScreen.propTypes = {
-  offers: offersType,
+  user: userType,
 };
 
-export default FavoritesScreen;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export {FavoritesScreen};
+export default connect(mapStateToProps, null)(FavoritesScreen);
