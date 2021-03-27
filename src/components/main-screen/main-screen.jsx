@@ -10,7 +10,7 @@ import LocationsList from '../locations/locations-list';
 import {offers as offersType, user as userType} from '../../types';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchOffers} from '../../store/api-actions';
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, AppRoute} from '../../const';
 
 const MainScreen = ({authorizationStatus, user, currentOffers, isDataLoaded, onLoadData}) => {
 
@@ -40,7 +40,7 @@ const MainScreen = ({authorizationStatus, user, currentOffers, isDataLoaded, onL
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link header__logo-link--active" to="/">
+              <Link className="header__logo-link header__logo-link--active" to={AppRoute.ROOT}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
               </Link>
             </div>
@@ -49,14 +49,14 @@ const MainScreen = ({authorizationStatus, user, currentOffers, isDataLoaded, onL
                 <li className="header__nav-item user">
                   {
                     authorizationStatus === AuthorizationStatus.AUTH ?
-                      <Link className="header__nav-link header__nav-link--profile" to="/favorites">
+                      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>
                         <div className="header__avatar-wrapper user__avatar-wrapper">
                         </div>
                         <span className="header__user-name user__name">
-                          { user.name }
+                          { user.email }
                         </span>
                       </Link> :
-                      <Link className="header__nav-link header__nav-link--profile" to="/login">
+                      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.LOGIN}>
                         <div className="header__avatar-wrapper user__avatar-wrapper">
                         </div>
                         <span className="header__login">Sign in</span>

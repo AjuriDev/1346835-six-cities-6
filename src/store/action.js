@@ -1,6 +1,7 @@
 export const ActionType = {
   CHANGE_CITY: `main/changeCity`,
   CHANGE_SORT_TYPE: `main/changeSortType`,
+  REDIRECT_TO_ROUTE: `main/redirectToRoute`,
   CHANGE_ACTIVE_OFFER_ID: `offer/changeActiveOfferID`,
   RESET_ACTIVE_OFFER_ID: `offer/resetActiveOfferID`,
   UPDATE_OFFERS: `server/updateOffers`,
@@ -40,5 +41,9 @@ export const ActionCreator = {
   setUser: (payload) => ({
     type: ActionType.SET_USER,
     payload,
+  }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
   }),
 };

@@ -5,6 +5,7 @@ import {ActionCreator} from "../../store/action";
 import {calcRatingProgress} from '../../utils/offers.js';
 import PropTypes from 'prop-types';
 import {offer as offerType} from '../../types';
+import {AppRoute} from '../../const';
 
 const Offer = ({offer, block, onMouseEnter, onMouseLeave}) => {
   const {
@@ -40,7 +41,7 @@ const Offer = ({offer, block, onMouseEnter, onMouseLeave}) => {
         </div>)
       }
       <div className={`${block}__image-wrapper place-card__image-wrapper`}>
-        <Link to={`/offer/${id}`}>
+        <Link to={`${AppRoute.OFFER}/${id}`}>
           <img className="place-card__image" src={ previewImage } width="260" height="200" alt="Place image"/>
         </Link>
       </div>
@@ -64,7 +65,7 @@ const Offer = ({offer, block, onMouseEnter, onMouseLeave}) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`}>
+          <Link to={`${AppRoute.OFFER}/${id}`}>
             { title }
           </Link>
         </h2>

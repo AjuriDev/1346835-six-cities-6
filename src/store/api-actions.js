@@ -1,15 +1,15 @@
 import {ActionCreator} from "./action";
 import {adaptOfferToClient, adaptUserToClient} from "./adapter";
-import {AuthorizationStatus} from "../const";
+import {AuthorizationStatus, AppRoute, APIRoute} from "../const";
 
 export const fetchOffers = () => (dispatch, _getState, api) => (
-  api.get(`/hotels`)
+  api.get(APIRoute.OFFERS)
     .then(({data}) => dispatch(ActionCreator.loadOffers(data
       .map((offer) => adaptOfferToClient(offer)))))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
-  api.get(`/login`)
+  api.get(APIRoute.LOGIN)
   .then(({data}) => {
     dispatch(ActionCreator.setUser(adaptUserToClient(data)));
     dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
@@ -18,9 +18,10 @@ export const checkAuth = () => (dispatch, _getState, api) => (
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
-  api.post(`/login`, {email, password})
+  api.post(APIRoute.LOGIN, {email, password})
     .then(({data}) => {
       dispatch(ActionCreator.setUser(adaptUserToClient(data)));
       dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
     })
+    .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT)))
 );

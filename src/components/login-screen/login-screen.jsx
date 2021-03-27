@@ -1,10 +1,17 @@
 import React, {useRef} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {login} from "../../store/api-actions";
+import {AuthorizationStatus, AppRoute} from '../../const';
 
-const LoginScreen = ({currentCity, onSubmit}) => {
+const LoginScreen = ({authorizationStatus, currentCity, onSubmit}) => {
+  if (authorizationStatus === AuthorizationStatus.AUTH) {
+    return (
+      <Redirect to={AppRoute.ROOT} />
+    );
+  }
+
   const loginRef = useRef();
   const passwordRef = useRef();
 
@@ -23,14 +30,14 @@ const LoginScreen = ({currentCity, onSubmit}) => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link" to="/">
+              <Link className="header__logo-link" to={AppRoute.ROOT}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
               </Link>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to="/login">
+                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.LOGIN}>
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__login">Sign in</span>
@@ -78,7 +85,7 @@ const LoginScreen = ({currentCity, onSubmit}) => {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to="/">
+              <Link className="locations__item-link" to={AppRoute.ROOT}>
                 <span>{ currentCity }</span>
               </Link>
             </div>
@@ -90,11 +97,13 @@ const LoginScreen = ({currentCity, onSubmit}) => {
 };
 
 LoginScreen.propTypes = {
+  authorizationStatus: PropTypes.string.isRequired,
   currentCity: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
   currentCity: state.currentCity,
 });
 

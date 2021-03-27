@@ -22,4 +22,24 @@ const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
-export {DEFAULT_CITY, CITY_NAMES, SortType, DEFAULT_USER, AuthorizationStatus};
+const AppRoute = {
+  LOGIN: `/login`,
+  FAVORITES: `/favorites`,
+  ROOT: `/`,
+  OFFER: `/offer`,
+};
+
+const APIRoute = {
+  OFFERS: `/hotels`,
+  LOGIN: `/login`,
+};
+
+export {
+  DEFAULT_CITY,
+  CITY_NAMES,
+  SortType,
+  DEFAULT_USER,
+  AuthorizationStatus,
+  AppRoute,
+  APIRoute,
+};
