@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
+// import {ActionCreator} from '../../store/action';
 import CitiesPlaces from '../cities/cities-places';
 import NoPlaces from '../cities/no-places';
 import Map from '../map/map';
@@ -12,15 +12,15 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchOffers} from '../../store/api-actions';
 import {AuthorizationStatus, AppRoute} from '../../const';
 
-const MainScreen = ({authorizationStatus, user, currentOffers, isDataLoaded, onLoadData}) => {
+const MainScreen = ({authorizationStatus, user, currentOffers, isOffersLoaded, onLoadOffers}) => {
 
   useEffect(() => {
-    if (!isDataLoaded) {
-      onLoadData();
+    if (!isOffersLoaded) {
+      onLoadOffers();
     }
-  }, [isDataLoaded]);
+  }, [isOffersLoaded]);
 
-  if (!isDataLoaded) {
+  if (!isOffersLoaded) {
     return (
       <LoadingScreen />
     );
@@ -83,7 +83,7 @@ const MainScreen = ({authorizationStatus, user, currentOffers, isDataLoaded, onL
               {
                 !isNoPlaces && (
                   <section className="cities__map map">
-                    <Map />
+                    <Map offers={currentOffers} />
                   </section>
                 )
               }
@@ -99,23 +99,19 @@ MainScreen.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   user: userType,
   currentOffers: offersType,
-  isDataLoaded: PropTypes.bool.isRequired,
-  onLoadData: PropTypes.func.isRequired,
+  isOffersLoaded: PropTypes.bool.isRequired,
+  onLoadOffers: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: state.authorizationStatus,
   user: state.user,
   currentOffers: state.currentOffers,
-  isDataLoaded: state.isDataLoaded,
+  isOffersLoaded: state.isOffersLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onUserAnswer(question, answer) {
-    dispatch(ActionCreator.incrementStep());
-    dispatch(ActionCreator.incrementMistake(question, answer));
-  },
-  onLoadData() {
+  onLoadOffers() {
     dispatch(fetchOffers());
   },
 });

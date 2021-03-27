@@ -1,4 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {reviews as reviewsType} from '../../types';
+import {sendReview} from '../../store/api-actions';
 
 const rating = [
   {
@@ -23,15 +27,35 @@ const rating = [
   },
 ];
 
+const initialReview = {
+  rating: 0,
+  comment: ``,
+};
+
 const COMMENT_MIN_LENGTH = 50;
 
-const ReviewsForm = () => {
+const ReviewsForm = ({offerID, currentReviews, onSubmit}) => {
   const [review, setReview] = useState({comment: ``, rating: null});
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    onSubmit(offerID, review);
+  };
+
+  useEffect(() => {
+    setReview(initialReview);
+  }, [currentReviews]);
 
   const isValidity = review.comment.length >= COMMENT_MIN_LENGTH && review.rating !== null;
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      className="reviews__form form"
+      action="#"
+      method="post"
+      onSubmit={handleSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {
@@ -88,4 +112,21 @@ const ReviewsForm = () => {
   );
 };
 
-export default ReviewsForm;
+ReviewsForm.propTypes = {
+  offerID: PropTypes.number.isRequired,
+  currentReviews: reviewsType,
+  onSubmit: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  currentReviews: state.currentReviews,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit(id, review) {
+    dispatch(sendReview(id, review));
+  },
+});
+
+export {ReviewsForm};
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewsForm);

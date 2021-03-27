@@ -1,18 +1,26 @@
 import {ActionType} from './action';
-import {DEFAULT_CITY, SortType, DEFAULT_USER, AuthorizationStatus} from '../const';
+import {DEFAULT_CITY, DEFAULT_OFFER, SortType, DEFAULT_USER, AuthorizationStatus} from '../const';
 import {filterOffersByCity, sortOffersByOption} from '../utils/offers';
 
 const INITIAL_OFFER_ID = 0;
 
 const initialState = {
-  offers: [],
   currentCity: DEFAULT_CITY,
   currentOffers: [],
   currentSortType: SortType.POPULAR,
   activeOfferID: INITIAL_OFFER_ID,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   user: DEFAULT_USER,
-  isDataLoaded: false,
+  isOffersLoaded: false,
+  offers: [],
+  isOfferLoaded: false,
+  currentOffer: DEFAULT_OFFER,
+  isNearbyOffersLoaded: false,
+  nearbyOffers: [],
+  isFavoriteOffersLoaded: false,
+  favoriteOffers: [],
+  isReviewsLoaded: false,
+  currentReviews: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -49,17 +57,65 @@ const reducer = (state = initialState, action) => {
         ...state,
         currentOffers: action.payload
       };
+    case ActionType.RUN_OFFERS_LOADING:
+      return {
+        ...state,
+        isOffersLoaded: false,
+      };
     case ActionType.LOAD_OFFERS:
       return {
         ...state,
         offers: action.payload,
         currentOffers: filterOffersByCity(action.payload, state.currentCity),
-        isDataLoaded: true,
+        isOffersLoaded: true,
+      };
+    case ActionType.RUN_OFFER_LOADING:
+      return {
+        ...state,
+        isOfferLoaded: false,
+      };
+    case ActionType.LOAD_OFFER:
+      return {
+        ...state,
+        currentOffer: action.payload,
+        isOfferLoaded: true,
+      };
+    case ActionType.RUN_NEARBY_OFFERS_LOADING:
+      return {
+        ...state,
+        isNearbyOffersLoaded: false,
+      };
+    case ActionType.LOAD_NEARBY_OFFERS:
+      return {
+        ...state,
+        nearbyOffers: action.payload,
+        isNearbyOffersLoaded: true,
+      };
+    case ActionType.RUN_FAVORITE_OFFERS_LOADING:
+      return {
+        ...state,
+        isFavoriteOffersLoaded: false,
+      };
+    case ActionType.LOAD_FAVORITE_OFFERS:
+      return {
+        ...state,
+        favoriteOffers: action.payload,
+        isFavoriteOffersLoaded: true,
+      };
+    case ActionType.RUN_REVIEWS_LOADING:
+      return {
+        ...state,
+        isReviewsLoaded: false,
+      };
+    case ActionType.LOAD_REVIEWS:
+      return {
+        ...state,
+        currentReviews: action.payload,
+        isReviewsLoaded: true,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
-        // user: action.payload,
         authorizationStatus: action.payload,
       };
     case ActionType.SET_USER:

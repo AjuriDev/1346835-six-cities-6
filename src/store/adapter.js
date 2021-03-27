@@ -29,4 +29,13 @@ const adaptOfferToClient = (offer) => {
   return adaptedOffer;
 };
 
-export {adaptOfferToClient, adaptUserToClient};
+const adaptReviewToClient = (review) => {
+  const adaptedReview = {
+    ...review,
+    user: adaptUserToClient(review.user),
+  };
+
+  return adaptedReview;
+};
+
+export {adaptOfferToClient, adaptUserToClient, adaptReviewToClient};
