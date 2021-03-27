@@ -2,7 +2,6 @@ import React, {useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import leaflet from 'leaflet';
 import {offers as offersType} from '../../types';
-import {city} from '../../const';
 import PropTypes from "prop-types";
 
 import 'leaflet/dist/leaflet.css';
@@ -11,13 +10,15 @@ const Map = ({currentOffers, activeOfferID}) => {
   const mapRef = useRef();
   const pointsRef = useRef();
 
+  const city = currentOffers[0].city;
+
   useEffect(() => {
     mapRef.current = leaflet.map(`map`, {
       center: {
-        lat: city.lat,
-        lng: city.lng
+        lat: city.location.latitude,
+        lng: city.location.longitude
       },
-      zoom: city.zoom,
+      zoom: city.location.zoom,
       zoomControl: false,
       marker: true
     });

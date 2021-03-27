@@ -1,9 +1,3 @@
-const city = {
-  lat: 52.38333,
-  lng: 4.9,
-  zoom: 12
-};
-
 const DEFAULT_CITY = `Paris`;
 
 const CITY_NAMES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
@@ -20,4 +14,4 @@ const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
-export {city, DEFAULT_CITY, CITY_NAMES, SortType, AuthorizationStatus};
+export {DEFAULT_CITY, CITY_NAMES, SortType, AuthorizationStatus};
