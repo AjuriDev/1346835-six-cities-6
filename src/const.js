@@ -15,4 +15,9 @@ const SortType = {
   TOP_RATED_FIRST: `Top rated first`
 };
 
-export {city, DEFAULT_CITY, CITY_NAMES, SortType};
+const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};
+
+export {city, DEFAULT_CITY, CITY_NAMES, SortType, AuthorizationStatus};

@@ -4,6 +4,8 @@ export const ActionType = {
   CHANGE_ACTIVE_OFFER_ID: `offer/changeActiveOfferID`,
   RESET_ACTIVE_OFFER_ID: `offer/resetActiveOfferID`,
   UPDATE_OFFERS: `server/updateOffers`,
+  LOAD_OFFERS: `server/loadOffers`,
+  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
 };
 
 export const ActionCreator = {
@@ -25,5 +27,13 @@ export const ActionCreator = {
   updateOffers: (payload) => ({
     type: ActionType.UPDATE_OFFERS,
     payload
-  })
+  }),
+  loadOffers: (payload) => ({
+    type: ActionType.LOAD_OFFERS,
+    payload
+  }),
+  requireAuthorization: (payload) => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    payload,
+  }),
 };
