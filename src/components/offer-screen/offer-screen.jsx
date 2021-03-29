@@ -1,27 +1,31 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {calcRatingProgress} from '../../utils/offers.js';
 import ReviewsBlock from '../reviews/reviews-block';
 import NearOffersList from './near-offers-list';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import {offers as offersType} from '../../types';
-import Map from '../map/map';
-import {city} from '../../const';
+import {offer as offerType, user as userType} from '../../types';
+import OfferMap from './offer-map';
+import LoadingScreen from '../loading-screen/loading-screen';
+import {AuthorizationStatus, AppRoute} from '../../const';
+import {fetchOffer} from '../../store/api-actions';
 
-const OfferScreen = ({offers, match: {params: {id}}}) => {
+const OfferScreen = ({authorizationStatus, user, currentOffer, isOfferLoaded, onLoadOffer, match: {params: {id}}}) => {
   const idInt = parseInt(id, 10);
-  const offer = offers.find((item) => item.id === idInt);
-  const nearOffers = offers.slice(0, 3); // Временное решение пока данные не придут с сервера
-  const points = nearOffers.map((nearOffer) => {
-    return {
-      lat: nearOffer.location.latitude,
-      lng: nearOffer.location.longitude,
-      title: nearOffer.title
-    };
-  });
 
-  if (!offer) {
+  useEffect(() => {
+    onLoadOffer(idInt);
+  }, [idInt]);
+
+  if (!isOfferLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+  if (!currentOffer) {
     return <NotFoundScreen />;
   }
 
@@ -36,10 +40,9 @@ const OfferScreen = ({offers, match: {params: {id}}}) => {
     maxAdults,
     price,
     rating,
-    reviews,
     title,
     type,
-  } = offer;
+  } = currentOffer;
 
   return (
     <div className="page">
@@ -47,20 +50,28 @@ const OfferScreen = ({offers, match: {params: {id}}}) => {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link" to="/">
+              <Link className="header__logo-link" to={AppRoute.ROOT}>
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
               </Link>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to="/favorites">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                  </Link>
+                  {
+                    authorizationStatus === AuthorizationStatus.AUTH ?
+                      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>
+                        <div className="header__avatar-wrapper user__avatar-wrapper">
+                        </div>
+                        <span className="header__user-name user__name">
+                          { user.email }
+                        </span>
+                      </Link> :
+                      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.LOGIN}>
+                        <div className="header__avatar-wrapper user__avatar-wrapper">
+                        </div>
+                        <span className="header__login">Sign in</span>
+                      </Link>
+                  }
                 </li>
               </ul>
             </nav>
@@ -158,18 +169,13 @@ const OfferScreen = ({offers, match: {params: {id}}}) => {
                   </p>
                 </div>
               </div>
-              <ReviewsBlock reviews={reviews} />
+              <ReviewsBlock offerID={idInt} />
             </div>
           </div>
-          <section className="property__map map">
-            <Map city={city} points={points} />
-          </section>
+          <OfferMap offerID={idInt} />
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearOffersList offers={nearOffers} />
-          </section>
+          <NearOffersList />
         </div>
       </main>
     </div>
@@ -177,8 +183,26 @@ const OfferScreen = ({offers, match: {params: {id}}}) => {
 };
 
 OfferScreen.propTypes = {
-  offers: offersType,
   match: PropTypes.object.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  user: userType,
+  currentOffer: offerType,
+  isOfferLoaded: PropTypes.bool.isRequired,
+  onLoadOffer: PropTypes.func.isRequired,
 };
 
-export default OfferScreen;
+const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
+  user: state.user,
+  currentOffer: state.currentOffer,
+  isOfferLoaded: state.isOfferLoaded,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadOffer(idInt) {
+    dispatch(fetchOffer(idInt));
+  },
+});
+
+export {OfferScreen};
+export default connect(mapStateToProps, mapDispatchToProps)(OfferScreen);

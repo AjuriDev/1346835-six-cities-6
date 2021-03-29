@@ -11,6 +11,7 @@ const user = PropTypes.shape({
   id: PropTypes.number.isRequired,
   isPro: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
+  email: PropTypes.string,
 });
 
 const review = PropTypes.shape({
@@ -39,7 +40,6 @@ const offer = PropTypes.shape({
   previewImage: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   rating: PropTypes.number.isRequired,
-  reviews: PropTypes.arrayOf(review).isRequired,
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 });
@@ -48,4 +48,4 @@ const reviews = PropTypes.arrayOf(review);
 
 const offers = PropTypes.arrayOf(offer);
 
-export {review, offer, reviews, offers};
+export {review, offer, reviews, offers, user};

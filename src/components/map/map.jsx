@@ -2,22 +2,23 @@ import React, {useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import leaflet from 'leaflet';
 import {offers as offersType} from '../../types';
-import {city} from '../../const';
 import PropTypes from "prop-types";
 
 import 'leaflet/dist/leaflet.css';
 
-const Map = ({currentOffers, activeOfferID}) => {
+const Map = ({offers, activeOfferID}) => {
   const mapRef = useRef();
   const pointsRef = useRef();
+
+  const city = offers[0].city;
 
   useEffect(() => {
     mapRef.current = leaflet.map(`map`, {
       center: {
-        lat: city.lat,
-        lng: city.lng
+        lat: city.location.latitude,
+        lng: city.location.longitude
       },
-      zoom: city.zoom,
+      zoom: city.location.zoom,
       zoomControl: false,
       marker: true
     });
@@ -35,7 +36,7 @@ const Map = ({currentOffers, activeOfferID}) => {
   }, [city]);
 
   useEffect(() => {
-    const points = currentOffers.map((offer) => {
+    const points = offers.map((offer) => {
       const icon = leaflet.icon({
         iconUrl: `${activeOfferID === offer.id ? `img/pin-active.svg` : `img/pin.svg`}`,
         iconSize: [30, 30]
@@ -65,12 +66,11 @@ const Map = ({currentOffers, activeOfferID}) => {
 };
 
 Map.propTypes = {
-  currentOffers: offersType,
+  offers: offersType,
   activeOfferID: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  currentOffers: state.currentOffers,
   activeOfferID: state.activeOfferID
 });
 
