@@ -39,7 +39,7 @@ const Map = ({offers, activeOfferID}) => {
     const points = offers.map((offer) => {
       const icon = leaflet.icon({
         iconUrl: `${activeOfferID === offer.id ? `img/pin-active.svg` : `img/pin.svg`}`,
-        iconSize: [30, 30]
+        iconSize: [27, 39]
       });
 
       return leaflet.marker({
