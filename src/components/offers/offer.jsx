@@ -8,6 +8,23 @@ import PropTypes from 'prop-types';
 import {offer as offerType} from '../../types';
 import {AppRoute} from '../../const';
 
+const OfferBlocks = {
+  CITIES: `cities`,
+  FAVORITES: `favorites`,
+  NEAR_PLACES: `near-places`,
+};
+
+const ImgSizes = {
+  SMALL: {
+    WIDTH: 150,
+    HEIGHT: 110,
+  },
+  MEDIUM: {
+    WIDTH: 260,
+    HEIGHT: 200,
+  }
+};
+
 const Offer = ({offer, className, onMouseEnter, onMouseLeave}) => {
   const [block] = className.split(`__`);
 
@@ -32,7 +49,8 @@ const Offer = ({offer, className, onMouseEnter, onMouseLeave}) => {
     onMouseLeave();
   };
 
-  const isRenderPremium = isPremium && block === `cities`;
+  const isRenderPremium = isPremium && block === OfferBlocks.CITIES;
+  const imgSize = block === OfferBlocks.FAVORITES ? ImgSizes.SMALL : ImgSizes.MEDIUM;
 
   return (
     <article
@@ -47,10 +65,10 @@ const Offer = ({offer, className, onMouseEnter, onMouseLeave}) => {
       }
       <div className={`${getMixedClass(`__image-wrapper`)} place-card__image-wrapper`}>
         <Link to={`${AppRoute.OFFER}/${id}`}>
-          <img className="place-card__image" src={ previewImage } width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={ previewImage } width={imgSize.WIDTH} height={imgSize.HEIGHT} alt="Place image"/>
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`${getMixedClass(`__card-info`)} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{ price }</b>
