@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {calcRatingProgress} from '../../utils/offers.js';
 import ReviewsBlock from '../reviews/reviews-block';
+import User from '../user/user';
 import NearOffersList from './near-offers-list';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import {offer as offerType, user as userType} from '../../types';
@@ -11,6 +12,8 @@ import OfferMap from './offer-map';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {AuthorizationStatus, AppRoute} from '../../const';
 import {fetchOffer} from '../../store/api-actions';
+
+const MAX_IMAGES = 6;
 
 const OfferScreen = ({authorizationStatus, user, currentOffer, isOfferLoaded, onLoadOffer, match: {params: {id}}}) => {
   const idInt = parseInt(id, 10);
@@ -84,7 +87,7 @@ const OfferScreen = ({authorizationStatus, user, currentOffer, isOfferLoaded, on
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {
-                images.map((image, i) => {
+                images.slice(0, MAX_IMAGES).map((image, i) => {
                   return (
                     <div key={`${image}-${i}`} className="property__image-wrapper">
                       <img className="property__image" src={image} alt="Photo studio" />
@@ -152,14 +155,15 @@ const OfferScreen = ({authorizationStatus, user, currentOffer, isOfferLoaded, on
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
-                <div className="property__host-user user">
+                <User user={ host } className={`property__host-user`} />
+                {/* <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
                     <img className="property__avatar user__avatar" src={host.avatarUrl} width={74} height={74} alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
                     { host.name }
                   </span>
-                </div>
+                </div> */}
                 <div className="property__description">
                   <p className="property__text">
                     { description }
