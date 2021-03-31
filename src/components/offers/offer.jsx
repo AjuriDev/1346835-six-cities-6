@@ -3,11 +3,16 @@ import {Link} from 'react-router-dom';
 import {connect} from "react-redux";
 import {ActionCreator} from "../../store/action";
 import {calcRatingProgress} from '../../utils/offers.js';
+import {mixClass} from '../../utils/common';
 import PropTypes from 'prop-types';
 import {offer as offerType} from '../../types';
 import {AppRoute} from '../../const';
 
-const Offer = ({offer, block, onMouseEnter, onMouseLeave}) => {
+const Offer = ({offer, className, onMouseEnter, onMouseLeave}) => {
+  const [block] = className.split(`__`);
+
+  const getMixedClass = mixClass(block);
+
   const {
     id,
     isPremium,
@@ -31,7 +36,7 @@ const Offer = ({offer, block, onMouseEnter, onMouseLeave}) => {
 
   return (
     <article
-      className={`${block}__place-card place-card`}
+      className={`${className} place-card`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -40,7 +45,7 @@ const Offer = ({offer, block, onMouseEnter, onMouseLeave}) => {
           <span>Premium</span>
         </div>)
       }
-      <div className={`${block}__image-wrapper place-card__image-wrapper`}>
+      <div className={`${getMixedClass(`__image-wrapper`)} place-card__image-wrapper`}>
         <Link to={`${AppRoute.OFFER}/${id}`}>
           <img className="place-card__image" src={ previewImage } width="260" height="200" alt="Place image"/>
         </Link>
@@ -77,7 +82,7 @@ const Offer = ({offer, block, onMouseEnter, onMouseLeave}) => {
 
 Offer.propTypes = {
   offer: offerType,
-  block: PropTypes.string.isRequired,
+  className: PropTypes.string,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
 };

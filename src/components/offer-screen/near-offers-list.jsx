@@ -14,7 +14,7 @@ const NearOffersList = ({nearbyOffers, isNearbyOffersLoaded}) => {
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
       <div className="near-places__list places__list">
-        {nearbyOffers.map((offer) => <Offer key={offer.id} offer={offer} block={`near-places`}/>)}
+        {nearbyOffers.map((offer) => <Offer key={offer.id} offer={offer} className={`near-places__card`}/>)}
       </div>
     </section>
   );
