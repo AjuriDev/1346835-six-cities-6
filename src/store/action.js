@@ -15,6 +15,8 @@ export const ActionType = {
   LOAD_FAVORITE_OFFERS: `server/loadFavotiteOffers`,
   RUN_REVIEWS_LOADING: `server/runReviewsLoading`,
   LOAD_REVIEWS: `server/reviews`,
+  SET_REVIEW_SENDING: `server/setReviewSending`,
+  REPORT_REVIEW_SEND: `server/reportReviewSend`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   SET_USER: `user/setUser`,
 };
@@ -72,6 +74,14 @@ export const ActionCreator = {
   }),
   loadReviews: (payload) => ({
     type: ActionType.LOAD_REVIEWS,
+    payload
+  }),
+  setReviewSending: (payload) => ({
+    type: ActionType.SET_REVIEW_SENDING,
+    payload,
+  }),
+  reportReviewSend: (payload) => ({
+    type: ActionType.REPORT_REVIEW_SEND,
     payload
   }),
   requireAuthorization: (payload) => ({

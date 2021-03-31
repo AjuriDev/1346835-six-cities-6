@@ -22,6 +22,7 @@ const initialState = {
   favoriteOffers: [],
   isReviewsLoaded: false,
   currentReviews: [],
+  isReviewSending: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -113,6 +114,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         currentReviews: sortReviews(action.payload),
         isReviewsLoaded: true,
+      };
+    case ActionType.SET_REVIEW_SENDING:
+      return {
+        ...state,
+        isReviewSending: action.payload,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {

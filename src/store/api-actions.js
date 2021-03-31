@@ -50,13 +50,20 @@ export const fetchReviews = (id) => (dispatch, _getState, api) => {
     .catch(() => {});
 };
 
-export const sendReview = (id, review) => (dispatch, _getState, api) => (
+export const sendReview = (id, review) => (dispatch, _getState, api) => {
+  dispatch(ActionCreator.setReviewSending(true));
+
   api.post(`${APIRoute.REVIEWS}/${id}`, review)
-  .then(({data}) => dispatch(ActionCreator.loadReviews(
-      data.map((item) => adaptReviewToClient(item))
-  )))
-  .catch(() => {})
-);
+  .then(({data}) => {
+    dispatch(ActionCreator.setReviewSending(false));
+    dispatch(ActionCreator.loadReviews(data.map((item) => adaptReviewToClient(item))));
+  })
+  .catch(() => {
+    dispatch(ActionCreator.setReviewSending(false));
+    // eslint-disable-next-line no-alert
+    alert(`Не удалось отправить отзыв, попробуйте еще раз`);
+  });
+};
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
