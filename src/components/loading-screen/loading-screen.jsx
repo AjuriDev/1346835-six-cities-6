@@ -1,8 +1,12 @@
 import React from 'react';
+import Header from '../layout/header';
 
 const LoadingScreen = () => {
   return (
-    <p>Loading ...</p>
+    <>
+      <Header />
+      <p>Loading ...</p>
+    </>
   );
 };
 
