@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import {offers as offersType} from '../../types';
 import Map from '../map/map';
 import LoadingScreen from '../loading-screen/loading-screen';
+import {offer as offerType} from '../../types';
 import {fetchNearbyOffers} from '../../store/api-actions';
 
-const OfferMap = ({offerID, nearbyOffers, isNearbyOffersLoaded, onLoadNearbyOffers}) => {
+const OfferMap = ({currentOffer, nearbyOffers, isNearbyOffersLoaded, onLoadNearbyOffers}) => {
   useEffect(() => {
-    onLoadNearbyOffers(offerID);
-  }, [offerID]);
+    onLoadNearbyOffers(currentOffer.id);
+  }, [currentOffer.id]);
 
   if (!isNearbyOffersLoaded) {
     return (
@@ -17,21 +18,25 @@ const OfferMap = ({offerID, nearbyOffers, isNearbyOffersLoaded, onLoadNearbyOffe
     );
   }
 
+  const nearbyWithCurrentOffers = nearbyOffers.slice();
+  nearbyWithCurrentOffers.push(currentOffer);
+
   return (
     <section className="property__map map">
-      <Map offers={nearbyOffers} />
+      <Map offers={nearbyWithCurrentOffers} currentOfferID={currentOffer.id} />
     </section>
   );
 };
 
 OfferMap.propTypes = {
-  offerID: PropTypes.number.isRequired,
+  currentOffer: offerType,
   isNearbyOffersLoaded: PropTypes.bool.isRequired,
   onLoadNearbyOffers: PropTypes.func.isRequired,
   nearbyOffers: offersType,
 };
 
 const mapStateToProps = (state) => ({
+  currentOffer: state.currentOffer,
   nearbyOffers: state.nearbyOffers,
   isNearbyOffersLoaded: state.isNearbyOffersLoaded,
 });

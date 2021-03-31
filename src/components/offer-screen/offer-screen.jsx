@@ -135,7 +135,7 @@ const OfferScreen = ({currentOffer, isOfferLoaded, onLoadOffer, match: {params: 
               <ReviewsBlock offerID={idInt} />
             </div>
           </div>
-          <OfferMap offerID={idInt} />
+          <OfferMap />
         </section>
         <div className="container">
           <NearOffersList />

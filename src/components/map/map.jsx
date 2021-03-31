@@ -6,10 +6,11 @@ import PropTypes from "prop-types";
 
 import 'leaflet/dist/leaflet.css';
 
-const Map = ({offers, activeOfferID}) => {
+const Map = ({offers, activeOfferID, currentOfferID}) => {
   const mapRef = useRef();
   const pointsRef = useRef();
 
+  const offerID = currentOfferID ? currentOfferID : activeOfferID;
   const city = offers[0].city;
 
   useEffect(() => {
@@ -37,8 +38,9 @@ const Map = ({offers, activeOfferID}) => {
 
   useEffect(() => {
     const points = offers.map((offer) => {
+
       const icon = leaflet.icon({
-        iconUrl: `${activeOfferID === offer.id ? `img/pin-active.svg` : `img/pin.svg`}`,
+        iconUrl: `${offerID === offer.id ? `img/pin-active.svg` : `img/pin.svg`}`,
         iconSize: [27, 39]
       });
 
@@ -68,6 +70,7 @@ const Map = ({offers, activeOfferID}) => {
 Map.propTypes = {
   offers: offersType,
   activeOfferID: PropTypes.number.isRequired,
+  currentOfferID: PropTypes.number,
 };
 
 const mapStateToProps = (state) => ({
