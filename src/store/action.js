@@ -13,6 +13,7 @@ export const ActionType = {
   LOAD_NEARBY_OFFERS: `server/loadNearbyOffers`,
   RUN_FAVORITE_OFFERS_LOADING: `server/runFavoriteOffersLoading`,
   LOAD_FAVORITE_OFFERS: `server/loadFavotiteOffers`,
+  UPDATE_FAVORITE_STATUS: `server/updateFavoriteStatus`,
   RUN_REVIEWS_LOADING: `server/runReviewsLoading`,
   LOAD_REVIEWS: `server/reviews`,
   SET_REVIEW_SENDING: `server/setReviewSending`,
@@ -67,6 +68,10 @@ export const ActionCreator = {
   }),
   loadFavoriteOffers: (payload) => ({
     type: ActionType.LOAD_FAVORITE_OFFERS,
+    payload
+  }),
+  updateFavoriteStatus: (payload) => ({
+    type: ActionType.UPDATE_FAVORITE_STATUS,
     payload
   }),
   runReviewsLoading: () => ({

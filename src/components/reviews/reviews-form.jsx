@@ -28,7 +28,7 @@ const rating = [
 ];
 
 const initialReview = {
-  rating: 0,
+  rating: null,
   comment: ``,
 };
 
@@ -80,9 +80,10 @@ const ReviewsForm = ({offerID, isReviewSending, currentReviews, onSubmit}) => {
                   <input
                     className="form__rating-input visually-hidden"
                     name="rating"
-                    defaultValue={item.star}
+                    value={item.star}
                     id={`${item.star}-stars`}
                     type="radio"
+                    checked={+review.rating === item.star}
                     onChange={({target}) => {
                       setReview((prevReview) => {
                         return {...prevReview, rating: target.value};
@@ -108,7 +109,7 @@ const ReviewsForm = ({offerID, isReviewSending, currentReviews, onSubmit}) => {
           id="review"
           name="review"
           placeholder="Tell how was your stay, what you like and what can be improved"
-          defaultValue={review.comment}
+          value={review.comment}
           onChange={({target}) => {
             setReview((prevReview) => {
               return {...prevReview, comment: target.value};

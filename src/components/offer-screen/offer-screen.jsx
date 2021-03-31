@@ -6,6 +6,7 @@ import Header from '../layout/header';
 import ReviewsBlock from '../reviews/reviews-block';
 import User from '../user/user';
 import NearOffersList from './near-offers-list';
+import FavoritesBtn from '../favorites-btn/favorites-btn';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import {offer as offerType} from '../../types';
 import OfferMap from './offer-map';
@@ -77,12 +78,7 @@ const OfferScreen = ({currentOffer, isOfferLoaded, onLoadOffer, match: {params: 
                 <h1 className="property__name">
                   { title }
                 </h1>
-                <button className={ isFavorite ? `property__bookmark-button button property__bookmark-button--active` : `property__bookmark-button button` } type="button">
-                  <svg className="property__bookmark-icon" width={31} height={33}>
-                    <use xlinkHref="#icon-bookmark" />
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoritesBtn offerID={idInt} isFavorite={isFavorite} className={`property`} />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">

@@ -40,6 +40,12 @@ export const fetchFavoriteOffers = () => (dispatch, _getState, api) => {
     .catch(() => {});
 };
 
+export const switchFavoriteStatus = (id, status) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.FAVORITE}/${id}/${status}`)
+    .then(({data}) => dispatch(ActionCreator.updateFavoriteStatus(adaptOfferToClient(data))))
+    .catch(() => dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN)))
+);
+
 export const fetchReviews = (id) => (dispatch, _getState, api) => {
   dispatch(ActionCreator.runReviewsLoading());
 

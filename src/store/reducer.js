@@ -1,6 +1,6 @@
 import {ActionType} from './action';
 import {DEFAULT_CITY, DEFAULT_OFFER, SortType, DEFAULT_USER, AuthorizationStatus} from '../const';
-import {filterOffersByCity, sortOffersByOption} from '../utils/offers';
+import {filterOffersByCity, filterOffersByFavorites, sortOffersByOption, updateFavoriteOffer} from '../utils/offers';
 import {sortReviews} from '../utils/reviews';
 
 const INITIAL_OFFER_ID = 0;
@@ -103,6 +103,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         favoriteOffers: action.payload,
         isFavoriteOffersLoaded: true,
+      };
+    case ActionType.UPDATE_FAVORITE_STATUS:
+      return {
+        ...state,
+        currentOffer: action.payload,
+        offers: updateFavoriteOffer(state.offers, action.payload),
+        nearbyOffers: updateFavoriteOffer(state.nearbyOffers, action.payload),
+        currentOffers: updateFavoriteOffer(state.currentOffers, action.payload),
+        favoriteOffers: filterOffersByFavorites(updateFavoriteOffer(state.favoriteOffers, action.payload)),
+        isFavoriteOffersLoaded: false,
       };
     case ActionType.RUN_REVIEWS_LOADING:
       return {

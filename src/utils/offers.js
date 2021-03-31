@@ -10,6 +10,10 @@ const filterOffersByCity = (offers, city) => {
   return offers.filter((offer) => offer.city.name === city);
 };
 
+const filterOffersByFavorites = (offers) => {
+  return offers.filter((offer) => offer.isFavorite);
+};
+
 const sortOffersByOption = (offers, option) => {
   const sortedOffers = [...offers];
   sortedOffers.sort((a, b) => {
@@ -30,8 +34,24 @@ const sortOffersByOption = (offers, option) => {
   return sortedOffers;
 };
 
+const updateFavoriteOffer = (offers, updatedOffer) => {
+  const index = offers.findIndex((offer) => offer.id === updatedOffer.id);
+
+  if (index < 0) {
+    return offers;
+  }
+
+  return [
+    ...offers.slice(0, index),
+    updatedOffer,
+    ...offers.slice(index + 1)
+  ];
+};
+
 export {
   calcRatingProgress,
   filterOffersByCity,
+  filterOffersByFavorites,
   sortOffersByOption,
+  updateFavoriteOffer,
 };

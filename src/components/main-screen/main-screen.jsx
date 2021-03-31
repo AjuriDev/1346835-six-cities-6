@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-// import {ActionCreator} from '../../store/action';
 import Header from '../layout/header';
 import CitiesPlaces from '../cities/cities-places';
 import NoPlaces from '../cities/no-places';
