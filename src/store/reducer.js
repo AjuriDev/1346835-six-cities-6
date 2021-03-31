@@ -1,6 +1,7 @@
 import {ActionType} from './action';
 import {DEFAULT_CITY, DEFAULT_OFFER, SortType, DEFAULT_USER, AuthorizationStatus} from '../const';
 import {filterOffersByCity, sortOffersByOption} from '../utils/offers';
+import {sortReviews} from '../utils/reviews';
 
 const INITIAL_OFFER_ID = 0;
 
@@ -110,7 +111,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_REVIEWS:
       return {
         ...state,
-        currentReviews: action.payload,
+        currentReviews: sortReviews(action.payload),
         isReviewsLoaded: true,
       };
     case ActionType.REQUIRED_AUTHORIZATION:

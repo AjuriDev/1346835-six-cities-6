@@ -8,6 +8,8 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchReviews} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../const';
 
+const MAX_REVIEWS = 10;
+
 const ReviewsBlock = ({authorizationStatus, offerID, currentReviews, isReviewsLoaded, onLoadCurrentReviews}) => {
   useEffect(() => {
     onLoadCurrentReviews(offerID);
@@ -24,7 +26,7 @@ const ReviewsBlock = ({authorizationStatus, offerID, currentReviews, isReviewsLo
       <h2 className="reviews__title">Reviews · <span className="reviews__amount">{ currentReviews.length }</span></h2>
       <ul className="reviews__list">
         {
-          currentReviews.map((review) => <Review key={review.id} review={review} />)
+          currentReviews.slice(0, MAX_REVIEWS).map((review) => <Review key={review.id} review={review} />)
         }
       </ul>
       {authorizationStatus === AuthorizationStatus.AUTH && <ReviewsForm offerID={offerID} />}
