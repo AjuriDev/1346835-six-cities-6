@@ -6,7 +6,6 @@ import {createAPI} from "./services/api";
 import {Provider} from 'react-redux';
 import {composeWithDevTools} from "redux-devtools-extension";
 import App from './components/app/app';
-import offers from './mocks/offers';
 import {reducer} from './store/reducer';
 import {ActionCreator} from './store/action';
 import {checkAuth, fetchOffers} from "./store/api-actions";
@@ -30,7 +29,7 @@ store.dispatch(fetchOffers());
 
 ReactDOM.render(
     <Provider store={store}>
-      <App offers={offers} />
+      <App />
     </Provider>,
     document.querySelector(`#root`)
 );
