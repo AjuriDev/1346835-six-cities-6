@@ -11,12 +11,6 @@ const LoginScreen = () => {
 
   const dispatch = useDispatch();
 
-  if (authorizationStatus === AuthorizationStatus.AUTH) {
-    return (
-      <Redirect to={AppRoute.ROOT} />
-    );
-  }
-
   const loginRef = useRef();
   const passwordRef = useRef();
 
@@ -28,6 +22,12 @@ const LoginScreen = () => {
       password: passwordRef.current.value,
     }));
   };
+
+  if (authorizationStatus === AuthorizationStatus.AUTH) {
+    return (
+      <Redirect to={AppRoute.ROOT} />
+    );
+  }
 
   return (
     <div className="page page--gray page--login">
