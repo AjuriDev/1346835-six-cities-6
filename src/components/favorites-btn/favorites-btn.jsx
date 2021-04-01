@@ -1,6 +1,6 @@
 import React from 'react';
+import {useDispatch} from "react-redux";
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import {switchFavoriteStatus} from '../../store/api-actions';
 
 const FavoritesBtnBlocks = {
@@ -19,11 +19,13 @@ const FavoritesIconSizes = {
   }
 };
 
-const FavoritesBtn = ({offerID, isFavorite, className, onFaviritesBtnClick}) => {
+const FavoritesBtn = ({offerID, isFavorite, className}) => {
+  const dispatch = useDispatch();
+
   const handleFavoritesSwitch = (evt) => {
     evt.preventDefault();
 
-    onFaviritesBtnClick(offerID, +!isFavorite);
+    dispatch(switchFavoriteStatus(offerID, +!isFavorite));
   };
 
   const iconSize = className === FavoritesBtnBlocks.PLACE_CARD ? FavoritesIconSizes.SMALL : FavoritesIconSizes.MEDIUM;
@@ -46,14 +48,6 @@ FavoritesBtn.propTypes = {
   offerID: PropTypes.number.isRequired,
   isFavorite: PropTypes.bool.isRequired,
   className: PropTypes.string.isRequired,
-  onFaviritesBtnClick: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onFaviritesBtnClick(id, status) {
-    dispatch(switchFavoriteStatus(id, status));
-  },
-});
-
-export {FavoritesBtn};
-export default connect(null, mapDispatchToProps)(FavoritesBtn);
+export default FavoritesBtn;

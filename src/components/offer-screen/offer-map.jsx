@@ -1,15 +1,20 @@
 import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
-import {offers as offersType} from '../../types';
+import {useSelector, useDispatch} from "react-redux";
 import Map from '../map/map';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {offer as offerType} from '../../types';
 import {fetchNearbyOffers} from '../../store/api-actions';
 
-const OfferMap = ({currentOffer, nearbyOffers, isNearbyOffersLoaded, onLoadNearbyOffers}) => {
+const OfferMap = () => {
+  const {
+    currentOffer,
+    nearbyOffers,
+    isNearbyOffersLoaded
+  } = useSelector((state) => state.SERVER);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    onLoadNearbyOffers(currentOffer.id);
+    dispatch(fetchNearbyOffers(currentOffer.id));
   }, [currentOffer.id]);
 
   if (!isNearbyOffersLoaded) {
@@ -28,24 +33,4 @@ const OfferMap = ({currentOffer, nearbyOffers, isNearbyOffersLoaded, onLoadNearb
   );
 };
 
-OfferMap.propTypes = {
-  currentOffer: offerType,
-  isNearbyOffersLoaded: PropTypes.bool.isRequired,
-  onLoadNearbyOffers: PropTypes.func.isRequired,
-  nearbyOffers: offersType,
-};
-
-const mapStateToProps = (state) => ({
-  currentOffer: state.currentOffer,
-  nearbyOffers: state.nearbyOffers,
-  isNearbyOffersLoaded: state.isNearbyOffersLoaded,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadNearbyOffers(id) {
-    dispatch(fetchNearbyOffers(id));
-  },
-});
-
-export {OfferMap};
-export default connect(mapStateToProps, mapDispatchToProps)(OfferMap);
+export default OfferMap;

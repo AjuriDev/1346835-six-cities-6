@@ -1,3 +1,5 @@
+import {createAction} from '@reduxjs/toolkit';
+
 const ActionType = {
   RUN_OFFERS_LOADING: `server/runOffersLoading`,
   LOAD_OFFERS: `server/loadOffers`,
@@ -12,55 +14,55 @@ const ActionType = {
   LOAD_REVIEWS: `server/reviews`,
 };
 
+const runOffersLoading = createAction(
+    ActionType.RUN_OFFERS_LOADING,
+);
 
-const runOffersLoading = () => ({
-  type: ActionType.RUN_OFFERS_LOADING,
-});
-const loadOffers = (payload) => ({
-  type: ActionType.LOAD_OFFERS,
-  payload
-});
+const loadOffers = createAction(
+    ActionType.LOAD_OFFERS,
+    (payload) => ({payload})
+);
 
-const runOfferLoading = () => ({
-  type: ActionType.RUN_OFFER_LOADING,
-});
+const runOfferLoading = createAction(
+    ActionType.RUN_OFFER_LOADING,
+);
 
-const loadOffer = (payload) => ({
-  type: ActionType.LOAD_OFFER,
-  payload
-});
+const loadOffer = createAction(
+    ActionType.LOAD_OFFER,
+    (payload) => ({payload})
+);
 
-const runNearbyOffersLoading = () => ({
-  type: ActionType.RUN_NEARBY_OFFERS_LOADING,
-});
+const runNearbyOffersLoading = createAction(
+    ActionType.RUN_NEARBY_OFFERS_LOADING,
+);
 
-const loadNearbyOffers = (payload) => ({
-  type: ActionType.LOAD_NEARBY_OFFERS,
-  payload
-});
+const loadNearbyOffers = createAction(
+    ActionType.LOAD_NEARBY_OFFERS,
+    (payload) => ({payload})
+);
 
-const runFavoriteOffersLoading = () => ({
-  type: ActionType.RUN_FAVORITE_OFFERS_LOADING,
-});
+const runFavoriteOffersLoading = createAction(
+    ActionType.RUN_FAVORITE_OFFERS_LOADING,
+);
 
-const loadFavoriteOffers = (payload) => ({
-  type: ActionType.LOAD_FAVORITE_OFFERS,
-  payload
-});
+const loadFavoriteOffers = createAction(
+    ActionType.LOAD_FAVORITE_OFFERS,
+    (payload) => ({payload})
+);
 
-const updateFavoriteStatus = (payload) => ({
-  type: ActionType.UPDATE_FAVORITE_STATUS,
-  payload
-});
+const updateFavoriteStatus = createAction(
+    ActionType.UPDATE_FAVORITE_STATUS,
+    (payload) => ({payload})
+);
 
-const runReviewsLoading = () => ({
-  type: ActionType.RUN_REVIEWS_LOADING,
-});
+const runReviewsLoading = createAction(
+    ActionType.RUN_REVIEWS_LOADING,
+);
 
-const loadReviews = (payload) => ({
-  type: ActionType.LOAD_REVIEWS,
-  payload
-});
+const loadReviews = createAction(
+    ActionType.LOAD_REVIEWS,
+    (payload) => ({payload})
+);
 
 export {
   ActionType,

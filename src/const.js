@@ -73,6 +73,13 @@ const APIRoute = {
   REVIEWS: `/comments`
 };
 
+const StoreNameSpace = {
+  SERVER: `SERVER`,
+  MAIN: `MAIN`,
+  USER: `USER`,
+  FORM: `FORM`,
+};
+
 export {
   DEFAULT_CITY,
   CITY_NAMES,
@@ -82,4 +89,5 @@ export {
   AuthorizationStatus,
   AppRoute,
   APIRoute,
+  StoreNameSpace,
 };

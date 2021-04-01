@@ -1,10 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import {useSelector} from "react-redux";
 import Offer from '../offers/offer.jsx';
-import {offers as offersType} from '../../types';
 
-const NearOffersList = ({nearbyOffers, isNearbyOffersLoaded}) => {
+const NearOffersList = () => {
+  const {nearbyOffers, isNearbyOffersLoaded} = useSelector((state) => state.SERVER);
+
 
   if (!isNearbyOffersLoaded) {
     return null;
@@ -20,15 +20,4 @@ const NearOffersList = ({nearbyOffers, isNearbyOffersLoaded}) => {
   );
 };
 
-NearOffersList.propTypes = {
-  nearbyOffers: offersType,
-  isNearbyOffersLoaded: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  nearbyOffers: state.nearbyOffers,
-  isNearbyOffersLoaded: state.isNearbyOffersLoaded,
-});
-
-export {NearOffersList};
-export default connect(mapStateToProps, null)(NearOffersList);
+export default NearOffersList;

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from "react-redux";
 import PropTypes from 'prop-types';
 import {calcRatingProgress} from '../../utils/offers.js';
 import Header from '../layout/header';
@@ -8,18 +8,21 @@ import User from '../user/user';
 import NearOffersList from './near-offers-list';
 import FavoritesBtn from '../favorites-btn/favorites-btn';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import {offer as offerType} from '../../types';
 import OfferMap from './offer-map';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchOffer} from '../../store/api-actions';
 
 const MAX_IMAGES = 6;
 
-const OfferScreen = ({currentOffer, isOfferLoaded, onLoadOffer, match: {params: {id}}}) => {
+const OfferScreen = ({match: {params: {id}}}) => {
+  const {currentOffer, isOfferLoaded} = useSelector((state) => state.SERVER);
+
+  const dispatch = useDispatch();
+
   const idInt = parseInt(id, 10);
 
   useEffect(() => {
-    onLoadOffer(idInt);
+    dispatch(fetchOffer(idInt));
   }, [idInt]);
 
   if (!isOfferLoaded) {
@@ -143,21 +146,7 @@ const OfferScreen = ({currentOffer, isOfferLoaded, onLoadOffer, match: {params: 
 
 OfferScreen.propTypes = {
   match: PropTypes.object.isRequired,
-  currentOffer: offerType,
-  isOfferLoaded: PropTypes.bool.isRequired,
-  onLoadOffer: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  currentOffer: state.currentOffer,
-  isOfferLoaded: state.isOfferLoaded,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadOffer(idInt) {
-    dispatch(fetchOffer(idInt));
-  },
-});
-
 export {OfferScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(OfferScreen);
+export default OfferScreen;

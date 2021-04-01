@@ -1,11 +1,13 @@
-import React/* , {useState}*/ from 'react';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import React from 'react';
+import {useSelector} from "react-redux";
+import {getCurrentOffers} from "../../store/selectors";
 import OffersList from '../offers/offers-list';
 import PlacesSort from './places-sort';
-import {offers as offersType} from '../../types';
 
-const CitiesPlaces = ({currentCity, currentOffers}) => {
+const CitiesPlaces = () => {
+  const {currentCity} = useSelector((state) => state.MAIN);
+  const {currentOffers} = useSelector((state) => ({...getCurrentOffers(state)}));
+
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
@@ -16,16 +18,5 @@ const CitiesPlaces = ({currentCity, currentOffers}) => {
   );
 };
 
-CitiesPlaces.propTypes = {
-  currentCity: PropTypes.string.isRequired,
-  currentOffers: offersType,
-};
-
-const mapStateToProps = (state) => ({
-  currentCity: state.currentCity,
-  currentOffers: state.currentOffers
-});
-
-export {CitiesPlaces};
-export default connect(mapStateToProps, null)(CitiesPlaces);
+export default CitiesPlaces;
 

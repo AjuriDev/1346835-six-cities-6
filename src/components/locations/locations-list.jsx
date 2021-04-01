@@ -1,13 +1,16 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from "react-redux";
 import {changeCity} from '../../store/actions/main';
-import PropTypes from 'prop-types';
 import {CITY_NAMES} from '../../const';
 
-const LocationsList = ({currentCity, onCityChange}) => {
+const LocationsList = () => {
+  const {currentCity} = useSelector((state) => state.MAIN);
+
+  const dispatch = useDispatch();
+
   const handleCityTabClick = (city) => (evt) => {
     evt.preventDefault();
-    onCityChange(city);
+    dispatch(changeCity(city));
   };
 
   return (
@@ -27,20 +30,4 @@ const LocationsList = ({currentCity, onCityChange}) => {
   );
 };
 
-LocationsList.propTypes = {
-  currentCity: PropTypes.string.isRequired,
-  onCityChange: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  currentCity: state.currentCity
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onCityChange(city) {
-    dispatch(changeCity(city));
-  },
-});
-
-export {LocationsList};
-export default connect(mapStateToProps, mapDispatchToProps)(LocationsList);
+export default LocationsList;

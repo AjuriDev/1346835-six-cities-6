@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from "react-redux";
 import PropTypes from 'prop-types';
-import {reviews as reviewsType} from '../../types';
 import {sendReview} from '../../store/api-actions';
 
 const rating = [
@@ -43,13 +42,17 @@ const fieldsetStyle = {
   border: `none`,
 };
 
-const ReviewsForm = ({offerID, isReviewSending, currentReviews, onSubmit}) => {
+const ReviewsForm = ({offerID}) => {
+  const {isReviewSending, currentReviews} = useSelector((state) => state.SERVER);
+
+  const dispatch = useDispatch();
+
   const [review, setReview] = useState({comment: ``, rating: null});
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit(offerID, review);
+    dispatch(sendReview(offerID, review));
   };
 
   useEffect(() => {
@@ -129,21 +132,6 @@ const ReviewsForm = ({offerID, isReviewSending, currentReviews, onSubmit}) => {
 
 ReviewsForm.propTypes = {
   offerID: PropTypes.number.isRequired,
-  isReviewSending: PropTypes.bool.isRequired,
-  currentReviews: reviewsType,
-  onSubmit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  isReviewSending: state.isReviewSending,
-  currentReviews: state.currentReviews,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(id, review) {
-    dispatch(sendReview(id, review));
-  },
-});
-
-export {ReviewsForm};
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewsForm);
+export default ReviewsForm;

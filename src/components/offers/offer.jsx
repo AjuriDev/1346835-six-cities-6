@@ -1,6 +1,6 @@
 import React from 'react';
+import {useDispatch} from "react-redux";
 import {Link} from 'react-router-dom';
-import {connect} from "react-redux";
 import {changeActiveOfferID, resetActiveOfferID} from "../../store/actions/main";
 import FavoritesBtn from '../favorites-btn/favorites-btn';
 import {calcRatingProgress} from '../../utils/offers.js';
@@ -26,7 +26,7 @@ const ImgSizes = {
   }
 };
 
-const Offer = ({offer, className, onMouseEnter, onMouseLeave}) => {
+const Offer = ({offer, className}) => {
   const {
     id,
     isPremium,
@@ -38,12 +38,14 @@ const Offer = ({offer, className, onMouseEnter, onMouseLeave}) => {
     type,
   } = offer;
 
+  const dispatch = useDispatch();
+
   const handleMouseEnter = () => {
-    onMouseEnter(id);
+    dispatch(changeActiveOfferID(id));
   };
 
   const handleMouseLeave = () => {
-    onMouseLeave();
+    dispatch(resetActiveOfferID());
   };
 
   const [block] = className.split(`__`);
@@ -97,18 +99,6 @@ const Offer = ({offer, className, onMouseEnter, onMouseLeave}) => {
 Offer.propTypes = {
   offer: offerType,
   className: PropTypes.string,
-  onMouseEnter: PropTypes.func.isRequired,
-  onMouseLeave: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onMouseEnter(id) {
-    dispatch(changeActiveOfferID(id));
-  },
-  onMouseLeave() {
-    dispatch(resetActiveOfferID());
-  },
-});
-
-export {Offer};
-export default connect(null, mapDispatchToProps)(Offer);
+export default Offer;

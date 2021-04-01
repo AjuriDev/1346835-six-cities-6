@@ -1,16 +1,11 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from "react-redux";
 import {SortType} from "../../const";
 import SortOption from './sort-option';
 
-const PlacesSort = ({
-  currentSortType
-}) => {
-  const [
-    isOptionsListOpened,
-    setOptionsListOpened
-  ] = useState(false);
+const PlacesSort = () => {
+  const {currentSortType} = useSelector((state) => state.MAIN);
+  const [isOptionsListOpened, setOptionsListOpened] = useState(false);
 
   const handleOptionsListClick = () => {
     setOptionsListOpened(!isOptionsListOpened);
@@ -35,13 +30,4 @@ const PlacesSort = ({
   );
 };
 
-PlacesSort.propTypes = {
-  currentSortType: PropTypes.string.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  currentSortType: state.currentSortType
-});
-
-export {PlacesSort};
-export default connect(mapStateToProps, null)(PlacesSort);
+export default PlacesSort;

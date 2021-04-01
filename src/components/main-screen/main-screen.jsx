@@ -1,20 +1,23 @@
 import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from "react-redux";
 import Header from '../layout/header';
 import CitiesPlaces from '../cities/cities-places';
 import NoPlaces from '../cities/no-places';
 import Map from '../map/map';
 import LocationsList from '../locations/locations-list';
-import {offers as offersType} from '../../types';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchOffers} from '../../store/api-actions';
+import {getCurrentOffers} from "../../store/selectors";
 
-const MainScreen = ({currentOffers, isOffersLoaded, onLoadOffers}) => {
+const MainScreen = () => {
+  const {currentOffers} = useSelector((state) => ({...getCurrentOffers(state)}));
+  const {isOffersLoaded} = useSelector((state) => state.SERVER);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isOffersLoaded) {
-      onLoadOffers();
+      dispatch(fetchOffers());
     }
   }, [isOffersLoaded]);
 
@@ -61,22 +64,4 @@ const MainScreen = ({currentOffers, isOffersLoaded, onLoadOffers}) => {
   );
 };
 
-MainScreen.propTypes = {
-  currentOffers: offersType,
-  isOffersLoaded: PropTypes.bool.isRequired,
-  onLoadOffers: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  currentOffers: state.currentOffers,
-  isOffersLoaded: state.isOffersLoaded,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadOffers() {
-    dispatch(fetchOffers());
-  },
-});
-
-export {MainScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);
+export default MainScreen;
