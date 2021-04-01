@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from "react-redux";
-import {ActionCreator} from "../../store/action";
+import {changeActiveOfferID, resetActiveOfferID} from "../../store/actions/main";
 import FavoritesBtn from '../favorites-btn/favorites-btn';
 import {calcRatingProgress} from '../../utils/offers.js';
 import {mixClass} from '../../utils/common';
@@ -103,10 +103,10 @@ Offer.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   onMouseEnter(id) {
-    dispatch(ActionCreator.changeActiveOfferID(id));
+    dispatch(changeActiveOfferID(id));
   },
   onMouseLeave() {
-    dispatch(ActionCreator.resetActiveOfferID());
+    dispatch(resetActiveOfferID());
   },
 });
 

@@ -1,13 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
+import {changeCity} from '../../store/actions/main';
 import PropTypes from 'prop-types';
 import {CITY_NAMES} from '../../const';
 
-const LocationsList = ({currentCity, changeCity}) => {
+const LocationsList = ({currentCity, onCityChange}) => {
   const handleCityTabClick = (city) => (evt) => {
     evt.preventDefault();
-    changeCity(city);
+    onCityChange(city);
   };
 
   return (
@@ -29,7 +29,7 @@ const LocationsList = ({currentCity, changeCity}) => {
 
 LocationsList.propTypes = {
   currentCity: PropTypes.string.isRequired,
-  changeCity: PropTypes.func.isRequired,
+  onCityChange: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -37,8 +37,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeCity(city) {
-    dispatch(ActionCreator.changeCity(city));
+  onCityChange(city) {
+    dispatch(changeCity(city));
   },
 });
 

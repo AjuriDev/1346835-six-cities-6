@@ -54,16 +54,12 @@ const reducer = (state = initialState, action) => {
         activeOfferID: INITIAL_OFFER_ID
       };
 
-    case ActionType.UPDATE_OFFERS:
-      return {
-        ...state,
-        currentOffers: action.payload
-      };
     case ActionType.RUN_OFFERS_LOADING:
       return {
         ...state,
         isOffersLoaded: false,
       };
+
     case ActionType.LOAD_OFFERS:
       return {
         ...state,
@@ -71,39 +67,46 @@ const reducer = (state = initialState, action) => {
         currentOffers: filterOffersByCity(action.payload, state.currentCity),
         isOffersLoaded: true,
       };
+
     case ActionType.RUN_OFFER_LOADING:
       return {
         ...state,
         isOfferLoaded: false,
       };
+
     case ActionType.LOAD_OFFER:
       return {
         ...state,
         currentOffer: action.payload,
         isOfferLoaded: true,
       };
+
     case ActionType.RUN_NEARBY_OFFERS_LOADING:
       return {
         ...state,
         isNearbyOffersLoaded: false,
       };
+
     case ActionType.LOAD_NEARBY_OFFERS:
       return {
         ...state,
         nearbyOffers: action.payload,
         isNearbyOffersLoaded: true,
       };
+
     case ActionType.RUN_FAVORITE_OFFERS_LOADING:
       return {
         ...state,
         isFavoriteOffersLoaded: false,
       };
+
     case ActionType.LOAD_FAVORITE_OFFERS:
       return {
         ...state,
         favoriteOffers: action.payload,
         isFavoriteOffersLoaded: true,
       };
+
     case ActionType.UPDATE_FAVORITE_STATUS:
       return {
         ...state,
@@ -114,27 +117,32 @@ const reducer = (state = initialState, action) => {
         favoriteOffers: filterOffersByFavorites(updateFavoriteOffer(state.favoriteOffers, action.payload)),
         isFavoriteOffersLoaded: false,
       };
+
     case ActionType.RUN_REVIEWS_LOADING:
       return {
         ...state,
         isReviewsLoaded: false,
       };
+
     case ActionType.LOAD_REVIEWS:
       return {
         ...state,
         currentReviews: sortReviews(action.payload),
         isReviewsLoaded: true,
       };
+
     case ActionType.SET_REVIEW_SENDING:
       return {
         ...state,
         isReviewSending: action.payload,
       };
+
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
         authorizationStatus: action.payload,
       };
+
     case ActionType.SET_USER:
       return {
         ...state,

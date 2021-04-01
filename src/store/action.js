@@ -1,10 +1,9 @@
 export const ActionType = {
+  REDIRECT_TO_ROUTE: `routing/redirectToRoute`,
   CHANGE_CITY: `main/changeCity`,
   CHANGE_SORT_TYPE: `main/changeSortType`,
-  REDIRECT_TO_ROUTE: `main/redirectToRoute`,
-  CHANGE_ACTIVE_OFFER_ID: `offer/changeActiveOfferID`,
-  RESET_ACTIVE_OFFER_ID: `offer/resetActiveOfferID`,
-  UPDATE_OFFERS: `server/updateOffers`,
+  CHANGE_ACTIVE_OFFER_ID: `main/changeActiveOfferID`,
+  RESET_ACTIVE_OFFER_ID: `main/resetActiveOfferID`,
   RUN_OFFERS_LOADING: `server/runOffersLoading`,
   LOAD_OFFERS: `server/loadOffers`,
   RUN_OFFER_LOADING: `server/runOfferLoading`,
@@ -16,8 +15,7 @@ export const ActionType = {
   UPDATE_FAVORITE_STATUS: `server/updateFavoriteStatus`,
   RUN_REVIEWS_LOADING: `server/runReviewsLoading`,
   LOAD_REVIEWS: `server/reviews`,
-  SET_REVIEW_SENDING: `server/setReviewSending`,
-  REPORT_REVIEW_SEND: `server/reportReviewSend`,
+  SET_REVIEW_SENDING: `form/setReviewSending`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
   SET_USER: `user/setUser`,
 };
@@ -37,10 +35,6 @@ export const ActionCreator = {
   }),
   resetActiveOfferID: () => ({
     type: ActionType.RESET_ACTIVE_OFFER_ID
-  }),
-  updateOffers: (payload) => ({
-    type: ActionType.UPDATE_OFFERS,
-    payload
   }),
   runOffersLoading: () => ({
     type: ActionType.RUN_OFFERS_LOADING,
@@ -84,10 +78,6 @@ export const ActionCreator = {
   setReviewSending: (payload) => ({
     type: ActionType.SET_REVIEW_SENDING,
     payload,
-  }),
-  reportReviewSend: (payload) => ({
-    type: ActionType.REPORT_REVIEW_SEND,
-    payload
   }),
   requireAuthorization: (payload) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
