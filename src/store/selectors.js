@@ -22,7 +22,7 @@ const getCurrentOffers = createSelector([
 const getSortedReviews = createSelector([
   getReviews,
 ], (reviews) => ({
-  sortedReviews: sortReviews(reviews),
+  currentReviews: sortReviews(reviews),
 }));
 
 export {

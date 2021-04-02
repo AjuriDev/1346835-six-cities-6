@@ -6,12 +6,14 @@ import PropTypes from 'prop-types';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchReviews} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../const';
+import {getSortedReviews} from "../../store/selectors";
 
 const MAX_REVIEWS = 10;
 
 const ReviewsBlock = ({offerID}) => {
   const {authorizationStatus} = useSelector((state) => state.USER);
-  const {currentReviews, isReviewsLoaded} = useSelector((state) => state.SERVER);
+  const {isReviewsLoaded} = useSelector((state) => state.SERVER);
+  const {currentReviews} = useSelector((state) => ({...getSortedReviews(state)}));
 
   const dispatch = useDispatch();
 
