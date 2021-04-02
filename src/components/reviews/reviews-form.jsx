@@ -43,7 +43,8 @@ const fieldsetStyle = {
 };
 
 const ReviewsForm = ({offerID}) => {
-  const {isReviewSending, currentReviews} = useSelector((state) => state.SERVER);
+  const {currentReviews} = useSelector((state) => state.SERVER);
+  const {isReviewSending} = useSelector((state) => state.FORM);
 
   const dispatch = useDispatch();
 
