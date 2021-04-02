@@ -5,13 +5,13 @@ import {Provider} from 'react-redux';
 import App from './components/app/app';
 import reducer from './store/reducers/root-reducer';
 import {configureStore} from '@reduxjs/toolkit';
-import {ActionCreator} from './store/action';
 import {checkAuth, fetchOffers} from "./store/api-actions";
 import {AuthorizationStatus} from "./const";
 import {redirect} from "./store/middlewares/redirect";
+import {requireAuthorization} from './store/actions/user';
 
 const api = createAPI(
-    () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH))
+    () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
 );
 
 const store = configureStore({
