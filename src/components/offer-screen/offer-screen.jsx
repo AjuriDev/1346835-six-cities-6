@@ -1,22 +1,28 @@
 import React, {useEffect} from 'react';
-import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from "react-redux";
 import PropTypes from 'prop-types';
 import {calcRatingProgress} from '../../utils/offers.js';
+import Header from '../layout/header';
 import ReviewsBlock from '../reviews/reviews-block';
+import User from '../user/user';
 import NearOffersList from './near-offers-list';
+import FavoritesBtn from '../favorites-btn/favorites-btn';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import {offer as offerType, user as userType} from '../../types';
 import OfferMap from './offer-map';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {AuthorizationStatus, AppRoute} from '../../const';
 import {fetchOffer} from '../../store/api-actions';
 
-const OfferScreen = ({authorizationStatus, user, currentOffer, isOfferLoaded, onLoadOffer, match: {params: {id}}}) => {
+const MAX_IMAGES = 6;
+
+const OfferScreen = ({match: {params: {id}}}) => {
+  const {currentOffer, isOfferLoaded} = useSelector((state) => state.SERVER);
+
+  const dispatch = useDispatch();
+
   const idInt = parseInt(id, 10);
 
   useEffect(() => {
-    onLoadOffer(idInt);
+    dispatch(fetchOffer(idInt));
   }, [idInt]);
 
   if (!isOfferLoaded) {
@@ -46,45 +52,13 @@ const OfferScreen = ({authorizationStatus, user, currentOffer, isOfferLoaded, on
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link" to={AppRoute.ROOT}>
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </Link>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  {
-                    authorizationStatus === AuthorizationStatus.AUTH ?
-                      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>
-                        <div className="header__avatar-wrapper user__avatar-wrapper">
-                        </div>
-                        <span className="header__user-name user__name">
-                          { user.email }
-                        </span>
-                      </Link> :
-                      <Link className="header__nav-link header__nav-link--profile" to={AppRoute.LOGIN}>
-                        <div className="header__avatar-wrapper user__avatar-wrapper">
-                        </div>
-                        <span className="header__login">Sign in</span>
-                      </Link>
-                  }
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {
-                images.map((image, i) => {
+                images.slice(0, MAX_IMAGES).map((image, i) => {
                   return (
                     <div key={`${image}-${i}`} className="property__image-wrapper">
                       <img className="property__image" src={image} alt="Photo studio" />
@@ -107,12 +81,7 @@ const OfferScreen = ({authorizationStatus, user, currentOffer, isOfferLoaded, on
                 <h1 className="property__name">
                   { title }
                 </h1>
-                <button className={ isFavorite ? `property__bookmark-button button property__bookmark-button--active` : `property__bookmark-button button` } type="button">
-                  <svg className="property__bookmark-icon" width={31} height={33}>
-                    <use xlinkHref="#icon-bookmark" />
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <FavoritesBtn offerID={idInt} isFavorite={isFavorite} className={`property`} />
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
@@ -152,14 +121,7 @@ const OfferScreen = ({authorizationStatus, user, currentOffer, isOfferLoaded, on
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
-                <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={host.avatarUrl} width={74} height={74} alt="Host avatar" />
-                  </div>
-                  <span className="property__user-name">
-                    { host.name }
-                  </span>
-                </div>
+                <User user={ host } className={`property__host-user`} />
                 <div className="property__description">
                   <p className="property__text">
                     { description }
@@ -172,7 +134,7 @@ const OfferScreen = ({authorizationStatus, user, currentOffer, isOfferLoaded, on
               <ReviewsBlock offerID={idInt} />
             </div>
           </div>
-          <OfferMap offerID={idInt} />
+          <OfferMap />
         </section>
         <div className="container">
           <NearOffersList />
@@ -184,25 +146,7 @@ const OfferScreen = ({authorizationStatus, user, currentOffer, isOfferLoaded, on
 
 OfferScreen.propTypes = {
   match: PropTypes.object.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  user: userType,
-  currentOffer: offerType,
-  isOfferLoaded: PropTypes.bool.isRequired,
-  onLoadOffer: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  user: state.user,
-  currentOffer: state.currentOffer,
-  isOfferLoaded: state.isOfferLoaded,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadOffer(idInt) {
-    dispatch(fetchOffer(idInt));
-  },
-});
-
 export {OfferScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(OfferScreen);
+export default OfferScreen;

@@ -1,13 +1,32 @@
 import React from 'react';
+import {useDispatch} from "react-redux";
 import {Link} from 'react-router-dom';
-import {connect} from "react-redux";
-import {ActionCreator} from "../../store/action";
+import {changeActiveOfferID, resetActiveOfferID} from "../../store/actions/main";
+import FavoritesBtn from '../favorites-btn/favorites-btn';
 import {calcRatingProgress} from '../../utils/offers.js';
+import {mixClass} from '../../utils/common';
 import PropTypes from 'prop-types';
 import {offer as offerType} from '../../types';
 import {AppRoute} from '../../const';
 
-const Offer = ({offer, block, onMouseEnter, onMouseLeave}) => {
+const OfferBlocks = {
+  CITIES: `cities`,
+  FAVORITES: `favorites`,
+  NEAR_PLACES: `near-places`,
+};
+
+const ImgSizes = {
+  SMALL: {
+    WIDTH: 150,
+    HEIGHT: 110,
+  },
+  MEDIUM: {
+    WIDTH: 260,
+    HEIGHT: 200,
+  }
+};
+
+const Offer = ({offer, className}) => {
   const {
     id,
     isPremium,
@@ -19,19 +38,26 @@ const Offer = ({offer, block, onMouseEnter, onMouseLeave}) => {
     type,
   } = offer;
 
+  const dispatch = useDispatch();
+
   const handleMouseEnter = () => {
-    onMouseEnter(id);
+    dispatch(changeActiveOfferID(id));
   };
 
   const handleMouseLeave = () => {
-    onMouseLeave();
+    dispatch(resetActiveOfferID());
   };
 
-  const isRenderPremium = isPremium && block === `cities`;
+  const [block] = className.split(`__`);
+
+  const getMixedClass = mixClass(block);
+
+  const isRenderPremium = isPremium && block === OfferBlocks.CITIES;
+  const imgSize = block === OfferBlocks.FAVORITES ? ImgSizes.SMALL : ImgSizes.MEDIUM;
 
   return (
     <article
-      className={`${block}__place-card place-card`}
+      className={`${className} place-card`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -40,27 +66,22 @@ const Offer = ({offer, block, onMouseEnter, onMouseLeave}) => {
           <span>Premium</span>
         </div>)
       }
-      <div className={`${block}__image-wrapper place-card__image-wrapper`}>
+      <div className={`${getMixedClass(`__image-wrapper`)} place-card__image-wrapper`}>
         <Link to={`${AppRoute.OFFER}/${id}`}>
-          <img className="place-card__image" src={ previewImage } width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={ previewImage } width={imgSize.WIDTH} height={imgSize.HEIGHT} alt="Place image"/>
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`${getMixedClass(`__card-info`)} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{ price }</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={ isFavorite ? `place-card__bookmark-button button place-card__bookmark-button--active` : `place-card__bookmark-button button` } type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <FavoritesBtn offerID={id} isFavorite={isFavorite} className={`place-card`} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: calcRatingProgress(rating)}}></span>
+            <span style={{width: calcRatingProgress(Math.round(rating))}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
@@ -77,19 +98,7 @@ const Offer = ({offer, block, onMouseEnter, onMouseLeave}) => {
 
 Offer.propTypes = {
   offer: offerType,
-  block: PropTypes.string.isRequired,
-  onMouseEnter: PropTypes.func.isRequired,
-  onMouseLeave: PropTypes.func.isRequired,
+  className: PropTypes.string,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  onMouseEnter(id) {
-    dispatch(ActionCreator.changeActiveOfferID(id));
-  },
-  onMouseLeave() {
-    dispatch(ActionCreator.resetActiveOfferID());
-  },
-});
-
-export {Offer};
-export default connect(null, mapDispatchToProps)(Offer);
+export default Offer;

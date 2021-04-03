@@ -1,16 +1,15 @@
 import React, {useRef} from 'react';
+import {useSelector, useDispatch} from "react-redux";
 import {Link, Redirect} from 'react-router-dom';
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
 import {login} from "../../store/api-actions";
+import Header from '../layout/header';
 import {AuthorizationStatus, AppRoute} from '../../const';
 
-const LoginScreen = ({authorizationStatus, currentCity, onSubmit}) => {
-  if (authorizationStatus === AuthorizationStatus.AUTH) {
-    return (
-      <Redirect to={AppRoute.ROOT} />
-    );
-  }
+const LoginScreen = () => {
+  const {authorizationStatus} = useSelector((state) => state.USER);
+  const {currentCity} = useSelector((state) => state.MAIN);
+
+  const dispatch = useDispatch();
 
   const loginRef = useRef();
   const passwordRef = useRef();
@@ -18,36 +17,21 @@ const LoginScreen = ({authorizationStatus, currentCity, onSubmit}) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit({
+    dispatch(login({
       login: loginRef.current.value,
       password: passwordRef.current.value,
-    });
+    }));
   };
+
+  if (authorizationStatus === AuthorizationStatus.AUTH) {
+    return (
+      <Redirect to={AppRoute.ROOT} />
+    );
+  }
 
   return (
     <div className="page page--gray page--login">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link" to={AppRoute.ROOT}>
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </Link>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={AppRoute.LOGIN}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__login">Sign in</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
@@ -96,22 +80,4 @@ const LoginScreen = ({authorizationStatus, currentCity, onSubmit}) => {
   );
 };
 
-LoginScreen.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  currentCity: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  currentCity: state.currentCity,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData));
-  }
-});
-
-export {LoginScreen};
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+export default LoginScreen;

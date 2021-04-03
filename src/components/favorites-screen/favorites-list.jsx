@@ -1,19 +1,19 @@
 import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from "react-redux";
 import {makeItemsUniq} from '../../utils/common';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import FavoritesItem from './favorites-item';
 import LoadingScreen from '../loading-screen/loading-screen';
-import {offers as offersType} from '../../types';
 import {fetchFavoriteOffers} from '../../store/api-actions';
 
 
-const FavoritesList = ({favoriteOffers, isFavoriteOffersLoaded, onLoadFavoriteOffers}) => {
+const FavoritesList = () => {
+  const {favoriteOffers, isFavoriteOffersLoaded} = useSelector((state) => state.SERVER);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (!isFavoriteOffersLoaded) {
-      onLoadFavoriteOffers();
-    }
-  }, [favoriteOffers]);
+    dispatch(fetchFavoriteOffers());
+  }, []);
 
   if (!isFavoriteOffersLoaded) {
     return (
@@ -45,23 +45,4 @@ const FavoritesList = ({favoriteOffers, isFavoriteOffersLoaded, onLoadFavoriteOf
   );
 };
 
-FavoritesList.propTypes = {
-  favoriteOffers: offersType,
-  isFavoriteOffersLoaded: PropTypes.bool.isRequired,
-  onLoadFavoriteOffers: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  user: state.user,
-  favoriteOffers: state.favoriteOffers,
-  isFavoriteOffersLoaded: state.isFavoriteOffersLoaded,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadFavoriteOffers() {
-    dispatch(fetchFavoriteOffers());
-  },
-});
-
-export {FavoritesList};
-export default connect(mapStateToProps, mapDispatchToProps)(FavoritesList);
+export default FavoritesList;

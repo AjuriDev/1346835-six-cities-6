@@ -1,25 +1,16 @@
 import React/* , {useState}*/ from 'react';
-import {connect} from 'react-redux';
+import {useSelector} from "react-redux";
+import {getCurrentOffers} from "../../store/selectors";
 import Offer from './offer';
-import {offers as offersType} from '../../types';
 
-const OffersList = ({currentOffers}) => {
-  // const [activeOffer, setActiveOffer] = useState(null);
+const OffersList = () => {
+  const {currentOffers} = useSelector((state) => ({...getCurrentOffers(state)}));
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {currentOffers.map((offer) => <Offer key={offer.id} offer={offer} block={`cities`} />)}
+      {currentOffers.map((offer) => <Offer key={offer.id} offer={offer} className={`cities__place-card`} />)}
     </div>
   );
 };
 
-OffersList.propTypes = {
-  currentOffers: offersType,
-};
-
-const mapStateToProps = (state) => ({
-  currentOffers: state.currentOffers
-});
-
-export {OffersList};
-export default connect(mapStateToProps, null)(OffersList);
+export default OffersList;

@@ -1,16 +1,24 @@
 import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from "react-redux";
 import Review from './review';
-import {connect} from 'react-redux';
 import ReviewsForm from './reviews-form';
-import {reviews as reviewsType} from '../../types';
 import PropTypes from 'prop-types';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchReviews} from '../../store/api-actions';
 import {AuthorizationStatus} from '../../const';
+import {getSortedReviews} from "../../store/selectors";
 
-const ReviewsBlock = ({authorizationStatus, offerID, currentReviews, isReviewsLoaded, onLoadCurrentReviews}) => {
+const MAX_REVIEWS = 10;
+
+const ReviewsBlock = ({offerID}) => {
+  const {authorizationStatus} = useSelector((state) => state.USER);
+  const {isReviewsLoaded} = useSelector((state) => state.SERVER);
+  const {currentReviews} = useSelector((state) => ({...getSortedReviews(state)}));
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    onLoadCurrentReviews(offerID);
+    dispatch(fetchReviews(offerID));
   }, [offerID]);
 
   if (!isReviewsLoaded) {
@@ -24,7 +32,7 @@ const ReviewsBlock = ({authorizationStatus, offerID, currentReviews, isReviewsLo
       <h2 className="reviews__title">Reviews · <span className="reviews__amount">{ currentReviews.length }</span></h2>
       <ul className="reviews__list">
         {
-          currentReviews.map((review) => <Review key={review.id} review={review} />)
+          currentReviews.slice(0, MAX_REVIEWS).map((review) => <Review key={review.id} review={review} />)
         }
       </ul>
       {authorizationStatus === AuthorizationStatus.AUTH && <ReviewsForm offerID={offerID} />}
@@ -33,24 +41,7 @@ const ReviewsBlock = ({authorizationStatus, offerID, currentReviews, isReviewsLo
 };
 
 ReviewsBlock.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
   offerID: PropTypes.number.isRequired,
-  isReviewsLoaded: PropTypes.bool.isRequired,
-  onLoadCurrentReviews: PropTypes.func.isRequired,
-  currentReviews: reviewsType,
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-  currentReviews: state.currentReviews,
-  isReviewsLoaded: state.isReviewsLoaded,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadCurrentReviews(id) {
-    dispatch(fetchReviews(id));
-  },
-});
-
-export {ReviewsBlock};
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewsBlock);
+export default ReviewsBlock;

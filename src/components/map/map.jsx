@@ -1,15 +1,18 @@
 import React, {useEffect, useRef} from 'react';
-import {connect} from 'react-redux';
+import {useSelector} from "react-redux";
 import leaflet from 'leaflet';
 import {offers as offersType} from '../../types';
 import PropTypes from "prop-types";
 
 import 'leaflet/dist/leaflet.css';
 
-const Map = ({offers, activeOfferID}) => {
+const Map = ({offers, currentOfferID}) => {
+  const {activeOfferID} = useSelector((state) => state.MAIN);
+
   const mapRef = useRef();
   const pointsRef = useRef();
 
+  const offerID = currentOfferID ? currentOfferID : activeOfferID;
   const city = offers[0].city;
 
   useEffect(() => {
@@ -37,9 +40,10 @@ const Map = ({offers, activeOfferID}) => {
 
   useEffect(() => {
     const points = offers.map((offer) => {
+
       const icon = leaflet.icon({
-        iconUrl: `${activeOfferID === offer.id ? `img/pin-active.svg` : `img/pin.svg`}`,
-        iconSize: [30, 30]
+        iconUrl: `${offerID === offer.id ? `img/pin-active.svg` : `img/pin.svg`}`,
+        iconSize: [27, 39]
       });
 
       return leaflet.marker({
@@ -67,12 +71,7 @@ const Map = ({offers, activeOfferID}) => {
 
 Map.propTypes = {
   offers: offersType,
-  activeOfferID: PropTypes.number.isRequired,
+  currentOfferID: PropTypes.number,
 };
 
-const mapStateToProps = (state) => ({
-  activeOfferID: state.activeOfferID
-});
-
-export {Map};
-export default connect(mapStateToProps, null)(Map);
+export default Map;
