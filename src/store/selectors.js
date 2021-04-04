@@ -11,6 +11,10 @@ const getCurrentSortType = (state) => state[StoreNameSpace.MAIN].currentSortType
 
 const getReviews = (state) => state[StoreNameSpace.SERVER].currentReviews;
 
+const getCurrentOffer = (state) => state[StoreNameSpace.SERVER].currentOffer;
+
+const getNearbyOffers = (state) => state[StoreNameSpace.SERVER].nearbyOffers;
+
 const getCurrentOffers = createSelector([
   getOffers,
   getCurrentCity,
@@ -25,7 +29,15 @@ const getSortedReviews = createSelector([
   currentReviews: sortReviews(reviews),
 }));
 
+const getNearbyWithCurrentOffers = createSelector([
+  getCurrentOffer,
+  getNearbyOffers,
+], (currentOffer, nearbyOffers) => ({
+  nearbyWithCurrentOffers: [...nearbyOffers, currentOffer],
+}));
+
 export {
   getCurrentOffers,
   getSortedReviews,
+  getNearbyWithCurrentOffers,
 };

@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import PropTypes from 'prop-types';
 import {calcRatingProgress} from '../../utils/offers.js';
 import Header from '../layout/header';
 import ReviewsBlock from '../reviews/reviews-block';
@@ -11,6 +10,7 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 import OfferMap from './offer-map';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchOffer} from '../../store/api-actions';
+import {match as matchType} from '../../types';
 
 const MAX_IMAGES = 6;
 
@@ -126,9 +126,6 @@ const OfferScreen = ({match: {params: {id}}}) => {
                   <p className="property__text">
                     { description }
                   </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
-                  </p>
                 </div>
               </div>
               <ReviewsBlock offerID={idInt} />
@@ -145,7 +142,7 @@ const OfferScreen = ({match: {params: {id}}}) => {
 };
 
 OfferScreen.propTypes = {
-  match: PropTypes.object.isRequired,
+  match: matchType,
 };
 
 export {OfferScreen};

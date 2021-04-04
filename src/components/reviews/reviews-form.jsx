@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from "react-redux";
 import PropTypes from 'prop-types';
 import {sendReview} from '../../store/api-actions';
 
-const rating = [
+const RATING_VALUES = [
   {
     star: 5,
     value: `perfect`
@@ -76,7 +76,7 @@ const ReviewsForm = ({offerID}) => {
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
         <div className="reviews__rating-form form__rating">
           {
-            rating.map((item) => {
+            RATING_VALUES.map((item) => {
               return (
                 <React.Fragment
                   key={`rating-${item.star}`}

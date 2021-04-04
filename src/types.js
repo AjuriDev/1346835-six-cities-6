@@ -44,8 +44,19 @@ const offer = PropTypes.shape({
   type: PropTypes.string.isRequired,
 });
 
+const params = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+});
+
+const match = PropTypes.shape({
+  isExact: PropTypes.bool.isRequired,
+  params,
+  path: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+});
+
 const reviews = PropTypes.arrayOf(review);
 
 const offers = PropTypes.arrayOf(offer);
 
-export {review, offer, reviews, offers, user};
+export {review, offer, reviews, offers, user, match};

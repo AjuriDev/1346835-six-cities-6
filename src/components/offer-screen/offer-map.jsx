@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from "react-redux";
+import {getNearbyWithCurrentOffers} from "../../store/selectors";
 import Map from '../map/map';
 import LoadingScreen from '../loading-screen/loading-screen';
 import {fetchNearbyOffers} from '../../store/api-actions';
@@ -7,9 +8,10 @@ import {fetchNearbyOffers} from '../../store/api-actions';
 const OfferMap = () => {
   const {
     currentOffer,
-    nearbyOffers,
     isNearbyOffersLoaded
   } = useSelector((state) => state.SERVER);
+  const {nearbyWithCurrentOffers} = useSelector((state) => ({...getNearbyWithCurrentOffers(state)}));
+
 
   const dispatch = useDispatch();
 
@@ -22,9 +24,6 @@ const OfferMap = () => {
       <LoadingScreen />
     );
   }
-
-  const nearbyWithCurrentOffers = nearbyOffers.slice();
-  nearbyWithCurrentOffers.push(currentOffer);
 
   return (
     <section className="property__map map">
