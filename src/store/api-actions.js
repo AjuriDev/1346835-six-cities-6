@@ -68,7 +68,10 @@ const fetchReviews = (id) => (dispatch, _getState, api) => {
     .then(({data}) => dispatch(loadReviews(
         data.map((review) => adaptReviewToClient(review))
     )))
-    .catch(() => {});
+    .catch(() => {
+      // eslint-disable-next-line no-alert
+      alert(`Запрос с некорректными данными`);
+    });
 };
 
 const sendReview = (id, review) => (dispatch, _getState, api) => {
@@ -98,7 +101,10 @@ const login = ({login: email, password}) => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(setUser(adaptUserToClient(data))))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))
-    .catch(() => {})
+    .catch(() => {
+      // eslint-disable-next-line no-alert
+      alert(`Вы ввели некорректные данные!`);
+    })
 );
 
 const logout = () => (dispatch, _getState, api) => (

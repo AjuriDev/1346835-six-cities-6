@@ -62,6 +62,7 @@ const AppRoute = {
   FAVORITES: `/favorites`,
   ROOT: `/`,
   OFFER: `/offer`,
+  NOT_FOUND: `/404`,
 };
 
 const APIRoute = {

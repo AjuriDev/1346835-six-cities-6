@@ -6,12 +6,14 @@ import App from './components/app/app';
 import reducer from './store/reducers/root-reducer';
 import {configureStore} from '@reduxjs/toolkit';
 import {checkAuth, fetchOffers} from "./store/api-actions";
-import {AuthorizationStatus} from "./const";
+import {AppRoute, AuthorizationStatus} from "./const";
 import {redirect} from "./store/middlewares/redirect";
 import {requireAuthorization} from './store/actions/user';
+import {redirectToRoute} from './store/actions/routing';
 
 const api = createAPI(
-    () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH))
+    () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
+    () => store.dispatch(redirectToRoute(AppRoute.NOT_FOUND)),
 );
 
 const store = configureStore({
