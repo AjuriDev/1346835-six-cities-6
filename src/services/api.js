@@ -7,9 +7,10 @@ const HttpCode = {
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
   NOT_FOUND: 404,
+  SERVICE_UNAVAILABLE: 503,
 };
 
-export const createAPI = (onUnauthorized, onNotFound) => {
+export const createAPI = (onUnauthorized, onNotFound, onServiceUnavailable) => {
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: REQUEST_TIMEOUT,
@@ -28,6 +29,11 @@ export const createAPI = (onUnauthorized, onNotFound) => {
 
     if (response.status === HttpCode.NOT_FOUND) {
       onNotFound();
+      throw err;
+    }
+
+    if (response.status === HttpCode.SERVICE_UNAVAILABLE) {
+      onServiceUnavailable();
       throw err;
     }
 

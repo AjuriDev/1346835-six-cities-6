@@ -24,7 +24,10 @@ const fetchOffers = () => (dispatch, _getState, api) => {
     .then(({data}) => dispatch(loadOffers(
         data.map((offer) => adaptOfferToClient(offer))
     )))
-    .catch(() => {});
+    .catch(() => {
+      // eslint-disable-next-line no-alert
+      alert(`При запросе возникла ошибка, повторите пожалуйста запрос`);
+    });
 };
 
 const fetchOffer = (id) => (dispatch, _getState, api) => {
@@ -32,7 +35,10 @@ const fetchOffer = (id) => (dispatch, _getState, api) => {
 
   api.get(`${APIRoute.OFFERS}/${id}`)
     .then(({data}) => dispatch(loadOffer(adaptOfferToClient(data))))
-    .catch(() => {});
+    .catch(() => {
+      // eslint-disable-next-line no-alert
+      alert(`При запросе возникла ошибка, повторите пожалуйста запрос`);
+    });
 };
 
 const fetchNearbyOffers = (id) => (dispatch, _getState, api) => {
@@ -42,7 +48,10 @@ const fetchNearbyOffers = (id) => (dispatch, _getState, api) => {
     .then(({data}) => dispatch(loadNearbyOffers(
         data.map((offer) => adaptOfferToClient(offer))
     )))
-    .catch(() => {});
+    .catch(() => {
+      // eslint-disable-next-line no-alert
+      alert(`При запросе возникла ошибка, повторите пожалуйста запрос`);
+    });
 };
 
 const fetchFavoriteOffers = () => (dispatch, _getState, api) => {
@@ -52,7 +61,7 @@ const fetchFavoriteOffers = () => (dispatch, _getState, api) => {
     .then(({data}) => dispatch(loadFavoriteOffers(
         data.map((offer) => adaptOfferToClient(offer))
     )))
-    .catch(() => {});
+    .catch(() => dispatch(redirectToRoute(AppRoute.LOGIN)));
 };
 
 const switchFavoriteStatus = (id, status) => (dispatch, _getState, api) => (
@@ -111,7 +120,10 @@ const logout = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGOUT)
     .then(() => dispatch(setUser(DEFAULT_USER)))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
-    .catch(() => {})
+    .catch(() => {
+      // eslint-disable-next-line no-alert
+      alert(`При запросе возникла ошибка, повторите пожалуйста запрос`);
+    })
 );
 
 export {

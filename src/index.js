@@ -14,6 +14,10 @@ import {redirectToRoute} from './store/actions/routing';
 const api = createAPI(
     () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
     () => store.dispatch(redirectToRoute(AppRoute.NOT_FOUND)),
+    () => {
+      // eslint-disable-next-line no-alert
+      alert(`Сервер недоступен, повторите запрос позже`);
+    },
 );
 
 const store = configureStore({
